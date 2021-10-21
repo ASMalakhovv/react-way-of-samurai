@@ -1,0 +1,13 @@
+.nav {
+    grid-area: n;
+    background-color: darkorange;
+    padding: 20px;
+}
+.navAdditionally {
+    margin-left: 10px;
+    margin-top: 40px;
+}
+.navFriendsBests {
+    display: flex;
+
+}

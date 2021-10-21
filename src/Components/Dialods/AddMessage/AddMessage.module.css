@@ -1,0 +1,7 @@
+.addMessage {
+    display: flex;
+    max-height: 20px;
+}
+.addMessage button {
+margin-left: 5px;
+}

@@ -1,0 +1,21 @@
+.dialogItem a {
+    color: black;
+    text-decoration: none;
+}
+
+.dialogItem a.active {
+    color: blue;
+}
+.dialogItem img {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+}
+
+.messages {
+
+}
+
+.message {
+
+}

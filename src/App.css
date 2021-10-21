@@ -1,0 +1,20 @@
+.app-wrapper {
+  display: grid;
+  grid-template-rows: 120px 1fr;
+  grid-template-columns: 2fr 10fr;
+  grid-template-areas:
+    "h h"
+    "n m";
+  margin: 0;
+}
+
+.app-wrapper-content {
+  grid-area: m;
+  background-color: gainsboro;
+}
+
+
+
+
+
+

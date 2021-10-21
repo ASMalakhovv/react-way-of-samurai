@@ -1,0 +1,10 @@
+.item {
+    color: rgba(173, 88, 5, 0.89);
+}
+
+.item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+
