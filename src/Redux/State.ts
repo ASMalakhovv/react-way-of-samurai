@@ -37,11 +37,18 @@ export type StateType = {
     profilePage: ProfilePageType
     sidebar: SideBarType
 }
+export type ActionType ={
+    type: 'ADD-NEW-POST' | 'UPDATE-NEW-POST-TEXT'
+    changeValue?:string
+}
+
 
 export type StoreType = {
     _state: StateType
-    addPosts: () => void
-    updateNewPostText: (changeValue: string) => void
+
+    //методы изменения стейта
+    dispatch:(action:ActionType) => void
+
     _onChange: () => void
     subscribe: (callback: () => void) => void
     getState: () => StateType
@@ -117,24 +124,27 @@ export let store: StoreType = {
             additionally: "Friends"
         }
     },
-    addPosts() {
-        debugger
-        const post: PostsTypeObject = {id: 3, message: this._state.profilePage.newPostText, like: 0};
-        this._state.profilePage.posts.push(post);
-        this._state.profilePage.newPostText = ""
-        this._onChange()
-    },
-    updateNewPostText(changeValue) {
-        store._state.profilePage.newPostText = changeValue
-        this._onChange()
-    },
     _onChange() {
         console.log('store changed')
     },
+
+    //методы изменения стейта
+    dispatch (action: ActionType) {
+        if (action.type === 'ADD-NEW-POST'){
+            const post: PostsTypeObject = {id: 3, message: this._state.profilePage.newPostText, like: 0};
+            this._state.profilePage.posts.push(post);
+            this._state.profilePage.newPostText = ""
+            this._onChange()
+        }else if (action.type === 'UPDATE-NEW-POST-TEXT' && action.changeValue){
+            store._state.profilePage.newPostText = action.changeValue
+            this._onChange()
+        }
+    },
+
+
     subscribe (callback)  {
         debugger
         this._onChange = callback
-
     },
     getState() {
         return this._state
