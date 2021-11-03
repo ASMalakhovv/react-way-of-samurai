@@ -42,10 +42,12 @@ export type StoreType = {
     _state: StateType
     addPosts: () => void
     updateNewPostText: (changeValue: string) => void
-    onChange: (store: StoreType) => void
+    _onChange: () => void
+    subscribe: (callback: () => void) => void
+    getState: () => void
 }
 
-let store: StoreType = {
+export let store: StoreType = {
     _state: {
         dialogsPage: {
             dialogs: [
@@ -119,27 +121,26 @@ let store: StoreType = {
         const post: PostsTypeObject = {id: 3, message: store._state.profilePage.newPostText, like: 0};
         store._state.profilePage.posts.push(post);
         store._state.profilePage.newPostText = ""
-        this.onChange(store)
+        this._onChange()
     },
     updateNewPostText(changeValue) {
         store._state.profilePage.newPostText = changeValue
-        this.onChange(store)
+        this._onChange()
     },
-    onChange(store) {
+    _onChange() {
         console.log('store changed')
+    },
+    subscribe (callback)  {
+        this._onChange = callback
+
+    },
+    getState() {
+        return this._state
     }
 
 }
 
-let
+export default store;
 
-    export
-default
-store;
-
-
-export const subscribe = (callback: (state: StateType) => void) => {
-    onChange = callback
-}
 
 

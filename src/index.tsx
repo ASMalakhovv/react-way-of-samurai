@@ -3,18 +3,18 @@ import './index.css';
 import ReactDOM from "react-dom";
 import {HashRouter} from "react-router-dom";
 import App from "./App";
-import {state, StateType, subscribe} from "./Redux/State";
+import {store, StoreType} from "./Redux/State";
 
-const rerenderEntireTree = (state:StateType) => {
+const rerenderEntireTree = () => {
     ReactDOM.render(
         <HashRouter>
-            <App state={state}/>
+            <App store={store}/>
         </HashRouter>,
         document.getElementById('root')
     );
 }
-rerenderEntireTree(state)
-subscribe(rerenderEntireTree)
+rerenderEntireTree()
+store.subscribe(rerenderEntireTree)
 
 
 

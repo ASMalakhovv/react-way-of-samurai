@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from "react";
 import s from './My_posts.module.css'
 import {Posts} from "../Post";
-import {updateNewPostText, PostsType} from "../../../../Redux/State";
+import {PostsType} from "../../../../Redux/State";
 
 
 type MyPostsPropsType = {
@@ -18,7 +18,7 @@ export function MyPosts(props: MyPostsPropsType) {
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewPostText(e.currentTarget.value)
+        props.updateNewPostText(e.currentTarget.value)
     }
 
     const postsElements = props.posts.map(p => <Posts message={p.message} like={p.like}/>)
