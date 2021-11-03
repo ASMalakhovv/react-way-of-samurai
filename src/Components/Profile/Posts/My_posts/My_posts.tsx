@@ -18,6 +18,7 @@ export function MyPosts(props: MyPostsPropsType) {
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        debugger
         props.updateNewPostText(e.currentTarget.value)
     }
 

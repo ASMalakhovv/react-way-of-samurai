@@ -8,7 +8,9 @@ import {store, StoreType} from "./Redux/State";
 const rerenderEntireTree = () => {
     ReactDOM.render(
         <HashRouter>
-            <App store={store}/>
+            <App state={store.getState()} addPosts={store.addPosts.bind(store)}
+            updateNewPostText={store.updateNewPostText.bind(store)}
+            />
         </HashRouter>,
         document.getElementById('root')
     );

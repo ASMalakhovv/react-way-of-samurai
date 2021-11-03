@@ -44,7 +44,7 @@ export type StoreType = {
     updateNewPostText: (changeValue: string) => void
     _onChange: () => void
     subscribe: (callback: () => void) => void
-    getState: () => void
+    getState: () => StateType
 }
 
 export let store: StoreType = {
@@ -118,9 +118,10 @@ export let store: StoreType = {
         }
     },
     addPosts() {
-        const post: PostsTypeObject = {id: 3, message: store._state.profilePage.newPostText, like: 0};
-        store._state.profilePage.posts.push(post);
-        store._state.profilePage.newPostText = ""
+        debugger
+        const post: PostsTypeObject = {id: 3, message: this._state.profilePage.newPostText, like: 0};
+        this._state.profilePage.posts.push(post);
+        this._state.profilePage.newPostText = ""
         this._onChange()
     },
     updateNewPostText(changeValue) {
@@ -131,6 +132,7 @@ export let store: StoreType = {
         console.log('store changed')
     },
     subscribe (callback)  {
+        debugger
         this._onChange = callback
 
     },

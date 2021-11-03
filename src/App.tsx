@@ -8,9 +8,11 @@ import {News} from "./Components/News/News";
 import {Settings} from "./Components/Settings/Settings";
 import Profile from "./Components/Profile/Profile";
 import {Route} from "react-router-dom";
-import {StoreType} from './Redux/State'
+import {StoreType,StateType} from './Redux/State'
 type AppPropsType = {
-    store: StoreType
+    state: StateType
+    addPosts: () => void
+    updateNewPostText: (changeValue: string) => void
 }
 
 function App(props: AppPropsType) {
@@ -18,14 +20,14 @@ function App(props: AppPropsType) {
 
             <div className="app-wrapper">
                 <Header/>
-                <NavBar state={props.store._state.sidebar}
-                        dialogsFriends={props.store._state.dialogsPage.dialogs}/>
+                <NavBar state={props.state.sidebar}
+                        dialogsFriends={props.state.dialogsPage.dialogs}/>
                 <div className="app-wrapper-content">
-                    <Route render={() => <Dialogs state={props.store._state.dialogsPage}/>} path="/message"
+                    <Route render={() => <Dialogs state={props.state.dialogsPage}/>} path="/message"
                     />
-                    <Route render={() => <Profile state={props.store._state.profilePage}
-                                                  addPosts={props.store.addPosts}
-                                                  updateNewPostText={props.store.updateNewPostText}
+                    <Route render={() => <Profile state={props.state.profilePage}
+                                                  addPosts={props.addPosts}
+                                                  updateNewPostText={props.updateNewPostText}
                     />} path="/profile"
                     />
                     <Route component={News} path="/news"/>
