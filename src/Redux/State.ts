@@ -37,17 +37,20 @@ export type StateType = {
     profilePage: ProfilePageType
     sidebar: SideBarType
 }
-export type ActionType ={
+export type ActionType = {
     type: 'ADD-NEW-POST' | 'UPDATE-NEW-POST-TEXT'
-    changeValue?:string
+    changeValue?: string
 }
 
+
+const ADD_NEW_POST = "ADD-NEW-POST";
+const UDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 
 export type StoreType = {
     _state: StateType
 
     //методы изменения стейта
-    dispatch:(action:ActionType) => void
+    dispatch: (action: ActionType) => void
 
     _onChange: () => void
     subscribe: (callback: () => void) => void
@@ -129,20 +132,21 @@ export let store: StoreType = {
     },
 
     //методы изменения стейта
-    dispatch (action: ActionType) {
-        if (action.type === 'ADD-NEW-POST'){
+    dispatch(action: ActionType) {
+        debugger
+        if (action.type === ADD_NEW_POST) {
             const post: PostsTypeObject = {id: 3, message: this._state.profilePage.newPostText, like: 0};
             this._state.profilePage.posts.push(post);
             this._state.profilePage.newPostText = ""
             this._onChange()
-        }else if (action.type === 'UPDATE-NEW-POST-TEXT' && action.changeValue){
+        } else if (action.type === UDATE_NEW_POST_TEXT && (action.changeValue || action.changeValue === "")) {
             store._state.profilePage.newPostText = action.changeValue
             this._onChange()
         }
     },
 
 
-    subscribe (callback)  {
+    subscribe(callback) {
         debugger
         this._onChange = callback
     },
@@ -152,15 +156,17 @@ export let store: StoreType = {
 
 }
 
-export const addNewPostActionCreator = ():ActionType => {
+export const addNewPostActionCreator = (): ActionType => {
+
     return {
-        type: "ADD-NEW-POST"
+        type: ADD_NEW_POST
     }
 }
-export const updateNewPostTextActionCreator = (value:string):ActionType => {
+export const updateNewPostTextActionCreator = (value: string): ActionType => {
+
     return {
-        type:"UPDATE-NEW-POST-TEXT",
-        changeValue:value
+        type: UDATE_NEW_POST_TEXT,
+        changeValue: value
     }
 }
 

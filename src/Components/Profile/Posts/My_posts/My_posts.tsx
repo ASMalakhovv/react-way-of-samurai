@@ -1,19 +1,16 @@
 import React, {ChangeEvent} from "react";
 import s from './My_posts.module.css'
 import {Posts} from "../Post";
-import {ActionType, PostsType,addNewPostActionCreator,updateNewPostTextActionCreator } from "../../../../Redux/State";
+import {ActionType, PostsType, addNewPostActionCreator, updateNewPostTextActionCreator} from "../../../../Redux/State";
 
 
 type MyPostsPropsType = {
     posts: PostsType
     newPostText: string
-    dispatch:(action:ActionType) => void
+    dispatch: (action: ActionType) => void
 }
 
 export function MyPosts(props: MyPostsPropsType) {
-
-
-
 
     const onClickPostHandler = () => {
         props.dispatch(addNewPostActionCreator())
