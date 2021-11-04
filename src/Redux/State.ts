@@ -38,13 +38,15 @@ export type StateType = {
     sidebar: SideBarType
 }
 export type ActionType = {
-    type: 'ADD-NEW-POST' | 'UPDATE-NEW-POST-TEXT'
+    type: 'ADD-NEW-POST' | 'UPDATE-NEW-POST-TEXT' | "ADD-NEW-MESSAGE"
     changeValue?: string
+    message?:string
 }
 
 
 const ADD_NEW_POST = "ADD-NEW-POST";
 const UDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const ADD_NEW_MESSAGE = "ADD-NEW-MESSAGE"
 
 export type StoreType = {
     _state: StateType
@@ -142,6 +144,11 @@ export let store: StoreType = {
         } else if (action.type === UDATE_NEW_POST_TEXT && (action.changeValue || action.changeValue === "")) {
             store._state.profilePage.newPostText = action.changeValue
             this._onChange()
+        } else if (action.type === ADD_NEW_MESSAGE && action.message) {
+            let numberOfMessages = this._state.dialogsPage.messages.length
+            let message = {id:numberOfMessages+1, message:action.message}
+            store._state.dialogsPage.messages.push(message)
+            this._onChange()
         }
     },
 
@@ -167,6 +174,13 @@ export const updateNewPostTextActionCreator = (value: string): ActionType => {
     return {
         type: UDATE_NEW_POST_TEXT,
         changeValue: value
+    }
+};
+
+export const addNewMessageActionCreator = (message:string): ActionType => {
+    return {
+        type: ADD_NEW_MESSAGE,
+        message:message
     }
 }
 
