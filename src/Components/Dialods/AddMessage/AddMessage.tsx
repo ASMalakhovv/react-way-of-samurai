@@ -1,22 +1,23 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import s from './AddMessage.module.css'
-import {ActionType, addNewMessageActionCreator} from "../../../Redux/State";
+import {ActionType, addNewMessageActionCreator, updateNewMessageBodyActionCreate} from "../../../Redux/State";
 
 type AddMessagePropsType = {
     dispatch: (action: ActionType) => void
+    newMessageBody: string
 }
 
 export function AddMessage(props: AddMessagePropsType) {
-    const inputRef = React.createRef<HTMLTextAreaElement>()
 
+    const onChangeTextAreaMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let newValue = e.currentTarget.value
+            props.dispatch(updateNewMessageBodyActionCreate(newValue))
+    }
     const onClickButtonHandler = () => {
-        const inputValue = inputRef.current?.value
-        if (inputValue) {
-            props.dispatch(addNewMessageActionCreator(inputValue))
-        }
+            props.dispatch(addNewMessageActionCreator())
     }
     return (<div className={s.addMessage}>
-            <textarea ref={inputRef}/>
+            <textarea value={props.newMessageBody} onChange={onChangeTextAreaMessage} />
             <button onClick={onClickButtonHandler}>go</button>
         </div>
     )

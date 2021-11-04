@@ -30,7 +30,7 @@ export function Dialogs(props: DialogsPropsType) {
                 {messagesElements}
             </div>
             <div className={s.addMessage}>
-                <AddMessage dispatch={props.dispatch}/>
+                <AddMessage dispatch={props.dispatch} newMessageBody={props.state.newMessageBody}/>
             </div>
         </div>
     )

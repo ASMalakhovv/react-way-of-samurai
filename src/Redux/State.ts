@@ -18,6 +18,7 @@ type PostsTypeObject = {
 export type DialogsPageType = {
     dialogs: DialogsType
     messages: MessagesType
+    newMessageBody: string
 }
 export type ProfilePageType = {
     newPostText: string
@@ -38,15 +39,17 @@ export type StateType = {
     sidebar: SideBarType
 }
 export type ActionType = {
-    type: 'ADD-NEW-POST' | 'UPDATE-NEW-POST-TEXT' | "ADD-NEW-MESSAGE"
+    type: 'ADD-NEW-POST' | 'UPDATE-NEW-POST-TEXT' | "ADD-NEW-MESSAGE" | "UPDATE-NEW-MESSAGE-BODY"
     changeValue?: string
     message?:string
+    valueMessageBody?:string
 }
 
 
 const ADD_NEW_POST = "ADD-NEW-POST";
 const UDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const ADD_NEW_MESSAGE = "ADD-NEW-MESSAGE"
+const ADD_NEW_MESSAGE = "ADD-NEW-MESSAGE";
+const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
 
 export type StoreType = {
     _state: StateType
@@ -108,6 +111,7 @@ export let store: StoreType = {
                 {id: 6, message: "YO"},
                 {id: 7, message: "YO"},
             ],
+            newMessageBody: ""
         },
         profilePage: {
             newPostText: "",
@@ -142,19 +146,22 @@ export let store: StoreType = {
             this._state.profilePage.newPostText = ""
             this._onChange()
         } else if (action.type === UDATE_NEW_POST_TEXT && (action.changeValue || action.changeValue === "")) {
-            store._state.profilePage.newPostText = action.changeValue
+            this._state.profilePage.newPostText = action.changeValue
             this._onChange()
-        } else if (action.type === ADD_NEW_MESSAGE && action.message) {
+        } else if (action.type === ADD_NEW_MESSAGE) {
             let numberOfMessages = this._state.dialogsPage.messages.length
-            let message = {id:numberOfMessages+1, message:action.message}
-            store._state.dialogsPage.messages.push(message)
+            let message = {id:numberOfMessages+1, message:this._state.dialogsPage.newMessageBody}
+            this._state.dialogsPage.newMessageBody=""
+            this._state.dialogsPage.messages.push(message)
+            this._onChange()
+        } else  if (action.type === UPDATE_NEW_MESSAGE_BODY && (action.valueMessageBody || action.valueMessageBody === "")) {
+            this._state.dialogsPage.newMessageBody = action.valueMessageBody
             this._onChange()
         }
     },
 
 
     subscribe(callback) {
-        debugger
         this._onChange = callback
     },
     getState() {
@@ -162,7 +169,7 @@ export let store: StoreType = {
     }
 
 }
-
+//actionCreate
 export const addNewPostActionCreator = (): ActionType => {
 
     return {
@@ -177,11 +184,17 @@ export const updateNewPostTextActionCreator = (value: string): ActionType => {
     }
 };
 
-export const addNewMessageActionCreator = (message:string): ActionType => {
+export const addNewMessageActionCreator = (): ActionType => {
     return {
         type: ADD_NEW_MESSAGE,
-        message:message
     }
+}
+
+export const updateNewMessageBodyActionCreate = (valueMessageBody:string): ActionType => {
+ return {
+     type: UPDATE_NEW_MESSAGE_BODY,
+     valueMessageBody:valueMessageBody
+ }
 }
 
 export default store;
