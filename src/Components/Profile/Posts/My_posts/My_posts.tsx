@@ -12,12 +12,25 @@ type MyPostsPropsType = {
 
 export function MyPosts(props: MyPostsPropsType) {
 
+    const addNewPostActionCreator = ():ActionType => {
+        return {
+            type: "ADD-NEW-POST"
+        }
+    }
+    const updateNewPostText = (value:string):ActionType => {
+        return {
+            type:"UPDATE-NEW-POST-TEXT",
+            changeValue:value
+        }
+    }
+
+
     const onClickPostHandler = () => {
-        props.dispatch({type:"ADD-NEW-POST"})
+        props.dispatch(addNewPostActionCreator())
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch({type:"UPDATE-NEW-POST-TEXT",changeValue:e.currentTarget.value})
+        props.dispatch(updateNewPostText(e.currentTarget.value))
     }
 
     const postsElements = props.posts.map(p => <Posts message={p.message} like={p.like}/>)
