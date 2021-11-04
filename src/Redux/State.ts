@@ -38,18 +38,18 @@ export type StateType = {
     profilePage: ProfilePageType
     sidebar: SideBarType
 }
-export type ActionType = {
-    type: 'ADD-NEW-POST' | 'UPDATE-NEW-POST-TEXT' | "ADD-NEW-MESSAGE" | "UPDATE-NEW-MESSAGE-BODY"
-    changeValue?: string
-    message?:string
-    valueMessageBody?:string
-}
+export type ActionType =
+    ReturnType<typeof addNewPostActionCreator>
+    | ReturnType<typeof updateNewPostTextActionCreator>
+    | ReturnType<typeof addNewMessageActionCreator>
+    | ReturnType<typeof updateNewMessageBodyActionCreate>;
 
 
 const ADD_NEW_POST = "ADD-NEW-POST";
-const UDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const ADD_NEW_MESSAGE = "ADD-NEW-MESSAGE";
 const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
+
 
 export type StoreType = {
     _state: StateType
@@ -145,16 +145,16 @@ export let store: StoreType = {
             this._state.profilePage.posts.push(post);
             this._state.profilePage.newPostText = ""
             this._onChange()
-        } else if (action.type === UDATE_NEW_POST_TEXT && (action.changeValue || action.changeValue === "")) {
+        } else if (action.type === UPDATE_NEW_POST_TEXT && (action.changeValue || action.changeValue === "")) {
             this._state.profilePage.newPostText = action.changeValue
             this._onChange()
         } else if (action.type === ADD_NEW_MESSAGE) {
             let numberOfMessages = this._state.dialogsPage.messages.length
-            let message = {id:numberOfMessages+1, message:this._state.dialogsPage.newMessageBody}
-            this._state.dialogsPage.newMessageBody=""
+            let message = {id: numberOfMessages + 1, message: this._state.dialogsPage.newMessageBody}
+            this._state.dialogsPage.newMessageBody = ""
             this._state.dialogsPage.messages.push(message)
             this._onChange()
-        } else  if (action.type === UPDATE_NEW_MESSAGE_BODY && (action.valueMessageBody || action.valueMessageBody === "")) {
+        } else if (action.type === UPDATE_NEW_MESSAGE_BODY && (action.valueMessageBody || action.valueMessageBody === "")) {
             this._state.dialogsPage.newMessageBody = action.valueMessageBody
             this._onChange()
         }
@@ -170,31 +170,31 @@ export let store: StoreType = {
 
 }
 //actionCreate
-export const addNewPostActionCreator = (): ActionType => {
+export const addNewPostActionCreator = () => {
 
     return {
         type: ADD_NEW_POST
-    }
+    } as const
 }
-export const updateNewPostTextActionCreator = (value: string): ActionType => {
+export const updateNewPostTextActionCreator = (value: string) => {
 
     return {
-        type: UDATE_NEW_POST_TEXT,
+        type: UPDATE_NEW_POST_TEXT,
         changeValue: value
-    }
+    } as const
 };
 
-export const addNewMessageActionCreator = (): ActionType => {
+export const addNewMessageActionCreator = () => {
     return {
         type: ADD_NEW_MESSAGE,
-    }
+    } as const
 }
 
-export const updateNewMessageBodyActionCreate = (valueMessageBody:string): ActionType => {
- return {
-     type: UPDATE_NEW_MESSAGE_BODY,
-     valueMessageBody:valueMessageBody
- }
+export const updateNewMessageBodyActionCreate = (valueMessageBody: string) => {
+    return {
+        type: UPDATE_NEW_MESSAGE_BODY,
+        valueMessageBody: valueMessageBody
+    } as const
 }
 
 export default store;
