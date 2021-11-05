@@ -8,7 +8,7 @@ import {News} from "./Components/News/News";
 import {Settings} from "./Components/Settings/Settings";
 import Profile from "./Components/Profile/Profile";
 import {Route} from "react-router-dom";
-import {StoreType,StateType,ActionType} from './Redux/State'
+import {StoreType,StateType,ActionType} from './Redux/Store'
 type AppPropsType = {
     state: StateType
     dispatch:(action:ActionType) => void

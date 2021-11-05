@@ -3,7 +3,7 @@ import './index.css';
 import ReactDOM from "react-dom";
 import {HashRouter} from "react-router-dom";
 import App from "./App";
-import {store, StoreType} from "./Redux/State";
+import {store, StoreType} from "./Redux/Store";
 
 const rerenderEntireTree = () => {
     ReactDOM.render(

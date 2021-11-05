@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from "react";
 import s from './AddMessage.module.css'
-import {ActionType, addNewMessageActionCreator, updateNewMessageBodyActionCreate} from "../../../Redux/State";
+import {ActionType} from "../../../Redux/Store";
+import {addNewMessageActionCreator, updateNewMessageBodyActionCreate } from "../../../Redux/dialogs-reducer";
 
 type AddMessagePropsType = {
     dispatch: (action: ActionType) => void

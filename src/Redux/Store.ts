@@ -1,5 +1,5 @@
-import profileReducer from "./profile-reducer"
-import dialogsReducer from "./dialogs-reducer"
+import profileReducer, { ProfileActionType } from "./profile-reducer"
+import dialogsReducer, { DialogsActionType } from "./dialogs-reducer"
 import sidebarReducer from "./sidebar-reducer"
 
 export type DialogsType = Array<DialogItemType>
@@ -42,19 +42,7 @@ export type StateType = {
     profilePage: ProfilePageType
     sidebar: SideBarType
 };
-export type ActionType =
-    ReturnType<typeof addNewPostActionCreator>
-    | ReturnType<typeof updateNewPostTextActionCreator>
-    | ReturnType<typeof addNewMessageActionCreator>
-    | ReturnType<typeof updateNewMessageBodyActionCreate>;
-
-
-const ADD_NEW_POST = "ADD-NEW-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const ADD_NEW_MESSAGE = "ADD-NEW-MESSAGE";
-const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
-
-
+export type ActionType = DialogsActionType | ProfileActionType
 export type StoreType = {
     _state: StateType
 
@@ -65,6 +53,7 @@ export type StoreType = {
     subscribe: (callback: () => void) => void
     getState: () => StateType
 }
+
 
 export let store: StoreType = {
     _state: {
@@ -142,7 +131,7 @@ export let store: StoreType = {
     },
 
     //методы изменения стейта
-    dispatch(action: ActionType) {
+    dispatch(action) {
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage,action)
         this._state.profilePage = profileReducer(this._state.profilePage,action);
         this._state.sidebar = sidebarReducer(this._state.sidebar,action);
@@ -157,34 +146,7 @@ export let store: StoreType = {
         return this._state
     }
 
-}
-//actionCreate
-export const addNewPostActionCreator = () => {
-
-    return {
-        type: ADD_NEW_POST
-    } as const
-}
-export const updateNewPostTextActionCreator = (value: string) => {
-
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        changeValue: value
-    } as const
 };
-
-export const addNewMessageActionCreator = () => {
-    return {
-        type: ADD_NEW_MESSAGE,
-    } as const
-}
-
-export const updateNewMessageBodyActionCreate = (valueMessageBody: string) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_BODY,
-        valueMessageBody: valueMessageBody
-    } as const
-}
 
 export default store;
 
