@@ -1,3 +1,7 @@
+import profileReducer from "./profile-reducer"
+import dialogsReducer from "./dialogs-reducer"
+import sidebarReducer from "./sidebar-reducer"
+
 export type DialogsType = Array<DialogItemType>
 type DialogItemType = {
     id: number
@@ -10,7 +14,7 @@ type MessageItemType = {
     message: string
 }
 export type PostsType = Array<PostsTypeObject>
-type PostsTypeObject = {
+export type PostsTypeObject = {
     id: number
     message: string
     like: number
@@ -37,7 +41,7 @@ export type StateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePageType
     sidebar: SideBarType
-}
+};
 export type ActionType =
     ReturnType<typeof addNewPostActionCreator>
     | ReturnType<typeof updateNewPostTextActionCreator>
@@ -139,25 +143,10 @@ export let store: StoreType = {
 
     //методы изменения стейта
     dispatch(action: ActionType) {
-        debugger
-        if (action.type === ADD_NEW_POST) {
-            const post: PostsTypeObject = {id: 3, message: this._state.profilePage.newPostText, like: 0};
-            this._state.profilePage.posts.push(post);
-            this._state.profilePage.newPostText = ""
-            this._onChange()
-        } else if (action.type === UPDATE_NEW_POST_TEXT && (action.changeValue || action.changeValue === "")) {
-            this._state.profilePage.newPostText = action.changeValue
-            this._onChange()
-        } else if (action.type === ADD_NEW_MESSAGE) {
-            let numberOfMessages = this._state.dialogsPage.messages.length
-            let message = {id: numberOfMessages + 1, message: this._state.dialogsPage.newMessageBody}
-            this._state.dialogsPage.newMessageBody = ""
-            this._state.dialogsPage.messages.push(message)
-            this._onChange()
-        } else if (action.type === UPDATE_NEW_MESSAGE_BODY && (action.valueMessageBody || action.valueMessageBody === "")) {
-            this._state.dialogsPage.newMessageBody = action.valueMessageBody
-            this._onChange()
-        }
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage,action)
+        this._state.profilePage = profileReducer(this._state.profilePage,action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar,action);
+        this._onChange()
     },
 
 
