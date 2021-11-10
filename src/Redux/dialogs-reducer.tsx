@@ -8,6 +8,7 @@ export type DialogsActionType =
     | ReturnType<typeof updateNewMessageBodyActionCreate>;
 
 const dialogsReducer = (state: DialogsPageType, action: ActionType): DialogsPageType => {
+    debugger
     switch (action.type) {
         case ADD_NEW_MESSAGE:
             let numberOfMessages = state.messages.length;
