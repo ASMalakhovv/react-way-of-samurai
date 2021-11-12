@@ -1,17 +1,14 @@
-import React, {ChangeEvent} from "react";
-import s from './My_posts.module.css'
-import {Posts} from "../Post";
-import {ActionType, PostsType, ProfilePageType} from "../../../../Redux/Store";
+import {ActionType,ProfilePageType} from "../../../../Redux/Store";
 import { addNewPostActionCreator, updateNewPostTextActionCreator } from "../../../../Redux/profile-reducer";
 import { MyPosts } from "./My_posts";
 
 
-type MyPostsPropsType = {
+type MyPostsContainerPropsType = {
     posts: ProfilePageType
     dispatch:(action:ActionType) => void
 }
 
-export function MyPostsContainer(props: MyPostsPropsType) {
+export function MyPostsContainer(props: MyPostsContainerPropsType) {
 
     const onClickPostHandler = () => {
         props.dispatch(addNewPostActionCreator())
