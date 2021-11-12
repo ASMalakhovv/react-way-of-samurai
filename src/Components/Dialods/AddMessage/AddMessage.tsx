@@ -4,18 +4,19 @@ import {ActionType} from "../../../Redux/Store";
 import {addNewMessageActionCreator, updateNewMessageBodyActionCreate } from "../../../Redux/dialogs-reducer";
 
 type AddMessagePropsType = {
-    dispatch: (action: ActionType) => void
     newMessageBody: string
+    onChangeTextAreaMessage: (text:string) => void
+    onClickButtonHandler: () => void
 }
 
 export function AddMessage(props: AddMessagePropsType) {
 
     const onChangeTextAreaMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let newValue = e.currentTarget.value
-            props.dispatch(updateNewMessageBodyActionCreate(newValue))
+        props.onChangeTextAreaMessage(newValue)
     }
     const onClickButtonHandler = () => {
-            props.dispatch(addNewMessageActionCreator())
+            props.onClickButtonHandler()
     }
     return (<div className={s.addMessage}>
             <textarea value={props.newMessageBody} onChange={onChangeTextAreaMessage} />

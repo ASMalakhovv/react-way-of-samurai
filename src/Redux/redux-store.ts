@@ -13,3 +13,4 @@ const reducers = combineReducers({
 
 
 export let store = createStore(reducers);
+export type StoreReduxType = ReturnType<typeof createStore>

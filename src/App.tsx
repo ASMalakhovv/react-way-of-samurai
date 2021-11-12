@@ -2,19 +2,21 @@ import React from 'react';
 import './App.css';
 import Header from "./Components/Header/Header";
 import NavBar from "./Components/Navbar/Navbar";
-import {Dialogs} from "./Components/Dialods/Dialogs";
 import {Music} from "./Components/Music/Music";
 import {News} from "./Components/News/News";
 import {Settings} from "./Components/Settings/Settings";
 import Profile from "./Components/Profile/Profile";
 import {Route} from "react-router-dom";
-import {StoreType,StateType,ActionType} from './Redux/Store'
+import {StateType,ActionType} from './Redux/Store'
+import {StoreReduxType} from './Redux/redux-store';
+import { DialogsContainer } from './Components/Dialods/DialogsContainer';
 type AppPropsType = {
     state: StateType
     dispatch:(action:ActionType) => void
 }
 
 function App(props: AppPropsType) {
+    debugger
     return (
 
             <div className="app-wrapper">
@@ -22,7 +24,7 @@ function App(props: AppPropsType) {
                 <NavBar state={props.state.sidebar}
                         dialogsFriends={props.state.dialogsPage.dialogs}/>
                 <div className="app-wrapper-content">
-                    <Route render={() => <Dialogs state={props.state.dialogsPage}
+                    <Route render={() => <DialogsContainer state={props.state.dialogsPage}
                                                   dispatch={props.dispatch}
                     />} path="/message"
                     />
