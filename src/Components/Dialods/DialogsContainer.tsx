@@ -9,7 +9,7 @@ type DialogsContainerPropsType = {
     dispatch: (action: ActionType) => void
 }
 
-export function DialogsContainer(props: DialogsContainerPropsType) {
+export function DialogsContainer(/*props: DialogsContainerPropsType*/) {
 
     let dialogs = props.state.dialogs
     let messages = props.state.messages

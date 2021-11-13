@@ -7,7 +7,7 @@ import {MyPostsContainer} from "./Posts/My_posts/My_postsContainer";
 
 type ProfilePropsType = {
     state: ProfilePageType
-    dispatch: (action: ActionType) => void
+    dispatch?: (action: ActionType) => void
 }
 
 function Profile(props: ProfilePropsType) {
