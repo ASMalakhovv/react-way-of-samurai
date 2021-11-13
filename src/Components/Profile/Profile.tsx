@@ -15,9 +15,7 @@ function Profile(props: ProfilePropsType) {
     return (
         <div>
             <ProfileInfo addressImage={props.state.addressImage}/>
-            <MyPostsContainer posts={props.state}
-                              dispatch={props.dispatch}
-            />
+            <MyPostsContainer />
 
         </div>
     )

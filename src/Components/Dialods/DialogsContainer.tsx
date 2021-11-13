@@ -1,6 +1,7 @@
 import React from "react";
-import {addNewMessageActionCreator, updateNewMessageBodyActionCreate } from "../../Redux/dialogs-reducer";
+import {addNewMessageActionCreator, updateNewMessageBodyActionCreate} from "../../Redux/dialogs-reducer";
 import {DialogsPageType, ActionType} from "../../Redux/Store";
+import {StoreContext} from "../../StoreContext";
 import {Dialogs} from "./Dialogs";
 
 
@@ -11,23 +12,30 @@ type DialogsContainerPropsType = {
 
 export function DialogsContainer(/*props: DialogsContainerPropsType*/) {
 
-    let dialogs = props.state.dialogs
-    let messages = props.state.messages
-    let newMessageBody = props.state.newMessageBody
 
-    const onChangeTextAreaMessage = (text:string) => {
-        props.dispatch(updateNewMessageBodyActionCreate(text))
-    }
-    const onClickButtonHandler = () => {
-        props.dispatch(addNewMessageActionCreator())
-    }
 
     return (
-        <Dialogs dialogs={dialogs}
-                 messages={messages}
-                 newMessageBody={newMessageBody}
-                 onChangeTextAreaMessage={onChangeTextAreaMessage}
-                 onClickButtonHandler={onClickButtonHandler}
-        />
+        <StoreContext.Consumer>
+            {
+                (store) => {
+                    let dialogs = store.getState().dialogsPage.dialogs
+                    let messages = store.getState().dialogsPage.messages
+                    let newMessageBody = store.getState().dialogsPage.newMessageBody
+
+                    const onChangeTextAreaMessage = (text: string) => {
+                        store.dispatch(updateNewMessageBodyActionCreate(text))
+                    }
+                    const onClickButtonHandler = () => {
+                        store.dispatch(addNewMessageActionCreator())
+                    }
+                    return <Dialogs dialogs={dialogs}
+                                    messages={messages}
+                                    newMessageBody={newMessageBody}
+                                    onChangeTextAreaMessage={onChangeTextAreaMessage}
+                                    onClickButtonHandler={onClickButtonHandler}
+                    />
+                }
+            }
+        </StoreContext.Consumer>
     )
 }
