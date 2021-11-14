@@ -13,7 +13,7 @@ type MyPostsPropsType = {
 }
 
 export function MyPosts(props: MyPostsPropsType) {
-
+    debugger;
     const onClickPostHandler = () => {
         props.onClickPostHandler();
     }
