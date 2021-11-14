@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import {HashRouter} from "react-router-dom";
 import App from "./App";
 import {store} from "./Redux/redux-store";
-import {Provider, StoreContext} from './StoreContext'
+import { Provider } from 'react-redux';
 const rerenderEntireTree = () => {
     ReactDOM.render(
         <HashRouter>
