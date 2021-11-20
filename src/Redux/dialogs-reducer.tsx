@@ -71,14 +71,14 @@ const dialogsReducer = (state: DialogsStateType = initialState, action: DialogsA
     switch (action.type) {
         case ADD_NEW_MESSAGE:
             let numberOfMessages = state.messages.length;
-            let message = {id: numberOfMessages + 1, message: state.newMessageBody};
-            newState = {...state, messages: [...state.messages, message]}
-            newState.newMessageBody = "";
-            return newState;
+            let body = state.newMessageBody
+            return {
+                ...state,
+                messages: [...state.messages, {id: numberOfMessages + 1, message: body}],
+                newMessageBody: ""
+            }
         case UPDATE_NEW_MESSAGE_BODY:
-            newState={...state}
-            newState.newMessageBody = action.valueMessageBody;
-            return newState;
+            return {...state, newMessageBody: action.valueMessageBody};
         default:
             return state;
     }
