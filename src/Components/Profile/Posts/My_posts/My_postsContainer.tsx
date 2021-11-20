@@ -8,7 +8,7 @@ import {MyPosts} from "./My_posts";
 import {AppStateType} from "../../../../Redux/redux-store";
 import {connect} from "react-redux";
 
-export type MyPostPropsType = mapStateToPropsType &  mapDispatchPropsType
+export type MyPostPropsType = mapStateToPropsType & mapDispatchPropsType
 export type mapStateToPropsType = {
     posts: PostsType
     newPostText: string
@@ -19,9 +19,6 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
         newPostText: state.profilePage.newPostText
     }
 }
-
-
-
 
 
 export type mapDispatchPropsType = {

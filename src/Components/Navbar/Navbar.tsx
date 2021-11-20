@@ -1,6 +1,6 @@
 import React from "react";
-import { DialogItemType } from "../../Redux/dialogs-reducer";
-import { SideBarType } from "../../Redux/sidebar-reducer";
+import {DialogItemType} from "../../Redux/dialogs-reducer";
+import {SideBarType} from "../../Redux/sidebar-reducer";
 import s from './Navbar.module.css'
 import {NavBarItem} from "./NavBarItem/NavBarItem";
 import {NavFriends} from "./NavFriends/NavFriends";
@@ -25,7 +25,7 @@ function NavBar(props: NavBarPropsType) {
                     <h1>{props.state.additionally}</h1>
                 </div>
                 <div className={s.navFriendsBests}>
-                {friendsBests}
+                    {friendsBests}
                 </div>
             </div>
         </nav>
