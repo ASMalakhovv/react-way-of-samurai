@@ -2,16 +2,10 @@ import React, {ChangeEvent} from "react";
 import s from './My_posts.module.css'
 import {Posts} from "../Post";
 import {addNewPostActionCreator, PostsType, updateNewPostTextActionCreator} from "../../../../Redux/profile-reducer";
+import { MyPostPropsType } from "./My_postsContainer";
 
 
-type MyPostsPropsType = {
-    posts: PostsType
-    newPostText: string
-    onClickPostHandler:() => void
-    onChangeHandler:(text:string)=>void
-}
-
-export function MyPosts(props: MyPostsPropsType) {
+export function MyPosts(props: MyPostPropsType) {
     debugger;
     const onClickPostHandler = () => {
         props.onClickPostHandler();

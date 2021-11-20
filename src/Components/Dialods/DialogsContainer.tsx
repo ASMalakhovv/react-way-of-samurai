@@ -1,56 +1,45 @@
 import React from "react";
 import {connect} from "react-redux";
-import {addNewMessageActionCreator, updateNewMessageBodyActionCreate} from "../../Redux/dialogs-reducer";
+import {
+    addNewMessageActionCreator,
+    DialogsActionType,
+    DialogsType,
+    MessagesType,
+    updateNewMessageBodyActionCreate
+} from "../../Redux/dialogs-reducer";
 import {AppStateType} from "../../Redux/redux-store";
-import {DialogsPageType, ActionType} from "../../Redux/Store";
 import {StoreContext} from "../../StoreContext";
 import {Dialogs} from "./Dialogs";
 
+export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-type DialogsContainerPropsType = {
-    state: DialogsPageType
-    dispatch: (action: ActionType) => void
+
+export type MapStateToPropsType = {
+    dialogs: DialogsType
+    messages: MessagesType
+    newMessageBody: string
 }
-/*export function DialogsContainer(/!*props: DialogsContainerPropsType*!/) {
-
-
-    return (
-        <StoreContext.Consumer>
-            {
-                (store) => {
-                    let dialogs = store.getState().dialogsPage.dialogs
-                    let messages = store.getState().dialogsPage.messages
-                    let newMessageBody = store.getState().dialogsPage.newMessageBody
-
-                    const onChangeTextAreaMessage = (text: string) => {
-                        store.dispatch(updateNewMessageBodyActionCreate(text))
-                    }
-                    const onClickButtonHandler = () => {
-                        store.dispatch(addNewMessageActionCreator())
-                    }
-                    return <Dialogs dialogs={dialogs}
-                                    messages={messages}
-                                    newMessageBody={newMessageBody}
-                                    onChangeTextAreaMessage={onChangeTextAreaMessage}
-                                    onClickButtonHandler={onClickButtonHandler}
-                    />
-                }
-            }
-        </StoreContext.Consumer>
-    )
-}*/
-
-export const mapStateToProps = (state: AppStateType) => {
+export const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages,
         newMessageBody: state.dialogsPage.newMessageBody
     }
 }
-export const mapDispatchToProps = (dispatch:(action:ActionType)=>void) => {
+
+
+export type MapDispatchToPropsType = {
+    onChangeTextAreaMessage: (text: string) => void
+    onClickButtonHandler: () => void
+}
+export const mapDispatchToProps = (dispatch: (action: DialogsActionType) => void):MapDispatchToPropsType => {
     return {
-        onChangeTextAreaMessage: (text: string) => {dispatch(updateNewMessageBodyActionCreate(text));},
-        onClickButtonHandler:()=>{dispatch(addNewMessageActionCreator());}
+        onChangeTextAreaMessage: (text: string) => {
+            dispatch(updateNewMessageBodyActionCreate(text));
+        },
+        onClickButtonHandler: () => {
+            dispatch(addNewMessageActionCreator());
+        }
     }
 }
 

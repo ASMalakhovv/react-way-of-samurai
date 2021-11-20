@@ -1,7 +1,8 @@
 import React from "react";
+import { DialogsType } from "../../Redux/dialogs-reducer";
+import { SideBarType } from "../../Redux/sidebar-reducer";
 import s from './Navbar.module.css'
 import {NavBarItem} from "./NavBarItem/NavBarItem";
-import {DialogsType, SideBarType} from "../../Redux/Store";
 import {NavFriends} from "./NavFriends/NavFriends";
 
 type NavBarPropsType = {

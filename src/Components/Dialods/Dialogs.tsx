@@ -2,17 +2,10 @@ import React from "react";
 import s from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {DialogMessage} from "./DialogMessage/DialogMessage";
-import {DialogsPageType,ActionType, DialogsType, MessagesType} from "../../Redux/Store";
 import {AddMessage} from "./AddMessage/AddMessage";
+import { DialogsType, MessagesType } from "../../Redux/dialogs-reducer";
+import { DialogsPropsType } from "./DialogsContainer";
 
-
-type DialogsPropsType = {
-    dialogs: DialogsType
-    messages: MessagesType
-    newMessageBody: string
-    onChangeTextAreaMessage: (text:string) => void
-    onClickButtonHandler: () => void
-}
 
 export function Dialogs(props: DialogsPropsType) {
 
