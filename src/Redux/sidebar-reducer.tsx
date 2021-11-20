@@ -1,4 +1,13 @@
-import {SideBarType, ActionType} from "./Store";
+
+
+export type SideBarType = {
+    title: Array<TitleBarType>
+    additionally: string
+}
+export type TitleBarType = {
+    id: string
+    item: string
+}
 
 let initialState = {
     title: [
@@ -12,8 +21,15 @@ let initialState = {
     additionally: "Friends"
 }
 
-const sidebarReducer = (state: SideBarType = initialState, action: ActionType): SideBarType => {
+const sidebarReducer = (state: SideBarType = initialState, action: SideBarActionType): SideBarType => {
     return state;
 }
+
+export const sideBarAC = () => {
+    return {
+        type: "SIDE-BAR"
+    }as const
+}
+export type SideBarActionType = ReturnType<typeof sideBarAC>
 
 export default sidebarReducer;

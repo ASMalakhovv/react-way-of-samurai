@@ -1,13 +1,28 @@
-import {ActionType, DialogsPageType} from "./Store";
-
-
 const ADD_NEW_MESSAGE = "ADD-NEW-MESSAGE";
 const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
 export type DialogsActionType =
     | ReturnType<typeof addNewMessageActionCreator>
     | ReturnType<typeof updateNewMessageBodyActionCreate>;
 
-let initialState = {
+export type DialogsStateType = {
+    dialogs: DialogsType
+    messages: MessagesType
+    newMessageBody: string
+}
+export type DialogsType = Array<DialogItemType>
+export type DialogItemType = {
+    id: number
+    name: string
+    img: string
+}
+export type MessagesType = Array<MessageItemType>
+export type MessageItemType = {
+    id: number
+    message: string
+}
+
+
+let initialState:DialogsStateType = {
     dialogs: [
         {
             id: 1,
@@ -57,7 +72,7 @@ let initialState = {
     newMessageBody: ""
 }
 
-const dialogsReducer = (state: DialogsPageType = initialState, action: ActionType): DialogsPageType => {
+const dialogsReducer = (state: DialogsStateType = initialState, action: DialogsActionType): DialogsStateType => {
     debugger
     switch (action.type) {
         case ADD_NEW_MESSAGE:

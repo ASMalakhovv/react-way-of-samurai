@@ -2,38 +2,38 @@ import profileReducer, { ProfileActionType } from "./profile-reducer"
 import dialogsReducer, { DialogsActionType } from "./dialogs-reducer"
 import sidebarReducer from "./sidebar-reducer"
 
-export type DialogsType = Array<DialogItemType>
+type DialogsType = Array<DialogItemType>
 type DialogItemType = {
     id: number
     name: string
     img: string
 }
-export type MessagesType = Array<MessageItemType>
+type MessagesType = Array<MessageItemType>
 type MessageItemType = {
     id: number
     message: string
 }
-export type PostsType = Array<PostsTypeObject>
-export type PostsTypeObject = {
+type PostsType = Array<PostsTypeObject>
+type PostsTypeObject = {
     id: number
     message: string
     like: number
 }
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: DialogsType
     messages: MessagesType
     newMessageBody: string
 }
-export type ProfilePageType = {
+type ProfilePageType = {
     newPostText: string
     posts: PostsType
     addressImage: string
 }
-export type SideBarType = {
+type SideBarType = {
     title: Array<TitleBarType>
     additionally: string
 }
-export type TitleBarType = {
+type TitleBarType = {
     id: string
     item: string
 }
@@ -132,8 +132,11 @@ export let store: StoreType = {
 
     //методы изменения стейта
     dispatch(action) {
+        // @ts-ignore
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage,action)
+        // @ts-ignore
         this._state.profilePage = profileReducer(this._state.profilePage,action);
+        // @ts-ignore
         this._state.sidebar = sidebarReducer(this._state.sidebar,action);
         this._onChange()
     },

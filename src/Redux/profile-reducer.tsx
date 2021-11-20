@@ -1,12 +1,23 @@
-import {ProfilePageType, PostsTypeObject, ActionType} from "./Store";
-
 const ADD_NEW_POST = "ADD-NEW-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 export type ProfileActionType =
     ReturnType<typeof addNewPostActionCreator>
     | ReturnType<typeof updateNewPostTextActionCreator>;
 
-let initialState = {
+export type ProfileStateType = {
+    newPostText: string
+    posts: PostsType
+    addressImage: string
+}
+export type PostsType = Array<PostsTypeObject>
+export type PostsTypeObject = {
+    id: number
+    message: string
+    like: number
+}
+
+
+let initialState: ProfileStateType = {
     newPostText: "",
     posts: [
         {id: 1, message: "Hi, how are you", like: 15},
@@ -15,7 +26,7 @@ let initialState = {
     addressImage: "https://assets.bellator.com/andrey_koreshkov_1990/08/23_banner/original-1619507089.jpg"
 }
 
-const profileReducer = (state: ProfilePageType=initialState, action: ActionType): ProfilePageType => {
+const profileReducer = (state: ProfileStateType = initialState, action: ProfileActionType): ProfileStateType => {
     switch (action.type) {
         case ADD_NEW_POST:
             const post: PostsTypeObject = {id: 3, message: state.newPostText, like: 0};
