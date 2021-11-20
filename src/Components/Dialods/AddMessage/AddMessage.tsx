@@ -16,7 +16,9 @@ export function AddMessage(props: AddMessagePropsType) {
         props.onChangeTextAreaMessage(newValue)
     }
     const onClickButtonHandler = () => {
+        if (props.newMessageBody.trim()) {
             props.onClickButtonHandler()
+        }
     }
     return (<div className={s.addMessage}>
             <textarea value={props.newMessageBody} onChange={onChangeTextAreaMessage} />

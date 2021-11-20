@@ -5,7 +5,6 @@ import {HashRouter} from "react-router-dom";
 import App from "./App";
 import {store} from "./Redux/redux-store";
 import { Provider } from 'react-redux';
-const rerenderEntireTree = () => {
     ReactDOM.render(
         <HashRouter>
             <Provider store={store}>
@@ -14,10 +13,6 @@ const rerenderEntireTree = () => {
         </HashRouter>,
         document.getElementById('root')
     );
-}
-rerenderEntireTree()
-store.subscribe(rerenderEntireTree)
-
 
 
 

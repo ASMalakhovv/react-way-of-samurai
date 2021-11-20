@@ -8,7 +8,9 @@ import { MyPostPropsType } from "./My_postsContainer";
 export function MyPosts(props: MyPostPropsType) {
     debugger;
     const onClickPostHandler = () => {
-        props.onClickPostHandler();
+        if(props.newPostText.trim()) {
+            props.onClickPostHandler();
+        }
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {

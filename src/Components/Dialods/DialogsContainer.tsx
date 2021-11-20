@@ -32,7 +32,7 @@ export type MapDispatchToPropsType = {
     onChangeTextAreaMessage: (text: string) => void
     onClickButtonHandler: () => void
 }
-export const mapDispatchToProps = (dispatch: (action: DialogsActionType) => void):MapDispatchToPropsType => {
+export const mapDispatchToProps = (dispatch: (action: DialogsActionType) => void): MapDispatchToPropsType => {
     return {
         onChangeTextAreaMessage: (text: string) => {
             dispatch(updateNewMessageBodyActionCreate(text));
