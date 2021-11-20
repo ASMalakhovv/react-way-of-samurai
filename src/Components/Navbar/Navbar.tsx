@@ -1,5 +1,5 @@
 import React from "react";
-import { DialogsType } from "../../Redux/dialogs-reducer";
+import { DialogItemType } from "../../Redux/dialogs-reducer";
 import { SideBarType } from "../../Redux/sidebar-reducer";
 import s from './Navbar.module.css'
 import {NavBarItem} from "./NavBarItem/NavBarItem";
@@ -7,7 +7,7 @@ import {NavFriends} from "./NavFriends/NavFriends";
 
 type NavBarPropsType = {
     state: SideBarType
-    dialogsFriends: DialogsType
+    dialogsFriends: Array<DialogItemType>
 }
 
 function NavBar(props: NavBarPropsType) {

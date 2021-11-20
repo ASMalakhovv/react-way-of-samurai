@@ -4,25 +4,19 @@ export type DialogsActionType =
     | ReturnType<typeof addNewMessageActionCreator>
     | ReturnType<typeof updateNewMessageBodyActionCreate>;
 
-export type DialogsStateType = {
-    dialogs: DialogsType
-    messages: MessagesType
-    newMessageBody: string
-}
-export type DialogsType = Array<DialogItemType>
+export type DialogsStateType = typeof initialState
 export type DialogItemType = {
     id: number
     name: string
     img: string
 }
-export type MessagesType = Array<MessageItemType>
 export type MessageItemType = {
     id: number
     message: string
 }
 
 
-let initialState:DialogsStateType = {
+let initialState = {
     dialogs: [
         {
             id: 1,
@@ -59,7 +53,7 @@ let initialState:DialogsStateType = {
             name: "Marina",
             img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXPwJzIsM4w_isvSQchgA1JnY4Vrpl_uyq4Q&usqp=CAU"
         }
-    ],
+    ] as Array<DialogItemType>,
     messages: [
         {id: 1, message: "Hi"},
         {id: 2, message: "How are you"},
@@ -68,7 +62,7 @@ let initialState:DialogsStateType = {
         {id: 5, message: "YO"},
         {id: 6, message: "YO"},
         {id: 7, message: "YO"},
-    ],
+    ] as Array<MessageItemType>,
     newMessageBody: ""
 }
 
