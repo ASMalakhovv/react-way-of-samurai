@@ -11,6 +11,7 @@ export type UsersActionType =
 export type UsersStateType = typeof initialState
 export type UsersItem = {
     id: string
+    photo:string
     fullName: string
     followed: boolean
     status: string
@@ -28,29 +29,7 @@ export type PostsTypeObject = {
 
 
 let initialState = {
-    users: [
-        {
-            id: v1(),
-            fullName: "Aleksandr",
-            followed: true,
-            status: "I am happy",
-            location: {city: "Omsk", country: "Russia"}
-        },
-        {
-            id: v1(),
-            fullName: "Dmitry",
-            followed: true,
-            status: "Hello world",
-            location: {city: "Omsk", country: "Russia"}
-        },
-        {
-            id: v1(),
-            fullName: "Dimych",
-            followed: true,
-            status: "I am teacher",
-            location: {city: "Minsk", country: "Belarus"}
-        }
-    ] as Array<UsersItem>
+    users: [] as Array<UsersItem>
 }
 
 export const usersReducer = (state: UsersStateType = initialState, action: UsersActionType): UsersStateType => {
@@ -60,7 +39,7 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
         case UNFOLLOW:
             return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: false} : u)};
         case SETUSERS:
-            return {...state, users: action.users};
+            return {...state, users: [...action.users]};
         default:
             return state;
     }
@@ -72,7 +51,7 @@ export const followAC = (id: string) => {
         type: FOLLOW,
         id
     } as const
-}
+};
 export const unFollowAC = (id: string) => {
     return {
         type: UNFOLLOW,
