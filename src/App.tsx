@@ -9,6 +9,7 @@ import Profile from "./Components/Profile/Profile";
 import {Route} from "react-router-dom";
 import {StateType, ActionType} from './Redux/Store'
 import {DialogsContainer} from './Components/Dialods/DialogsContainer';
+import { Users } from './Components/Users/Users';
 
 
 type AppPropsType = {
@@ -27,7 +28,7 @@ function App(props: AppPropsType) {
             <div className="app-wrapper-content">
                 <Route path="/message" component={DialogsContainer}/>
                 <Route path="/profile" render={() => <Profile state={props.state.profilePage}/>}/>
-                <Route path="/users" render={() => <div>users</div>}/>
+                <Route path="/users" render={() => <Users />}/>
                 <Route path="/news" component={News}/>
                 <Route path="/music" component={Music}/>
                 <Route path="/settings" component={Settings}/>
