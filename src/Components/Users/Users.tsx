@@ -69,6 +69,7 @@ export function Users(props: UsersPropsType) {
     </div>)
     return (
         <div>
+            <button onClick={getUser}>Get User</button>
             {user}
         </div>
     )
