@@ -1,28 +1,29 @@
 import {connect} from "react-redux"
 import {AppStateType} from "../../Redux/redux-store"
-import {followAC, setUsersAC, unFollowAC, UsersActionType, UsersItem} from "../../Redux/users-reducer"
+import {followAC, setUsersAC, unFollowAC, UsersActionType, UsersItemType} from "../../Redux/users-reducer"
 import {Users} from "./Users"
 
 
 export type MapStateToProps = {
-    users: Array<UsersItem>
+    users: Array<UsersItemType>
 }
-
 function mapStateToProps(state: AppStateType): MapStateToProps {
     return {
-        users: state.usersPage.users
+        users: state.usersPage.items
     }
 }
+
+
 
 export type UsersPropsType = MapStateToProps & MapDispatchToPropsType
 
 
-export type MapDispatchToPropsType = {
-    onClickFollowHandler: (id: string) => void
-    onClickUnFollowHandler: (id: string) => void
-    onClickSetUsersHandler: (users: Array<UsersItem>) => void
-}
 
+export type MapDispatchToPropsType = {
+    onClickFollowHandler: (id: number) => void
+    onClickUnFollowHandler: (id: number) => void
+    onClickSetUsersHandler: (users: Array<UsersItemType>) => void
+}
 function mapDispatchToProps(dispatch: (action: UsersActionType) => void): MapDispatchToPropsType {
     return {
         onClickFollowHandler: (id) => {

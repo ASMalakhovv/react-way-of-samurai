@@ -18,7 +18,6 @@ type AppPropsType = {
 }
 
 function App(props: AppPropsType) {
-    debugger
     return (
 
         <div className="app-wrapper">
