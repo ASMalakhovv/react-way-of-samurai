@@ -2,9 +2,9 @@ import axios from 'axios';
 import {AxiosResponse} from 'axios';
 import React from 'react';
 import {v1} from 'uuid';
-import {UsersStateType} from '../../Redux/users-reducer';
 import {UsersPropsType} from './UsersContainer';
 import userPhoto from '../../assets/images/images.png'
+import { UsersStateType } from '../../types/entities';
 
 
 export function Users(props: UsersPropsType) {
@@ -43,7 +43,8 @@ export function Users(props: UsersPropsType) {
             ])*/
         }
     }
-    let user = props.users.map(u => <div key={u.id}>
+    let user = props.users.map( u =>
+        <div key={u.id}>
                     <span>
                         <div>
                             <img src={u.photos.small || userPhoto}
@@ -55,7 +56,7 @@ export function Users(props: UsersPropsType) {
 
                         </div>
                     </span>
-        <span>
+            <span>
                         <span>
                             <div>{u.name}</div>
                             <div>{u.status}</div>
@@ -66,7 +67,7 @@ export function Users(props: UsersPropsType) {
                         </span>
 
                     </span>
-    </div>)
+        </div>)
     return (
         <div>
             <button onClick={getUser}>Get User</button>

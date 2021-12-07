@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {UsersItemType, UsersStateType} from "../types/entities";
 
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
@@ -8,41 +9,12 @@ export type UsersActionType =
     | ReturnType<typeof unFollowAC>
     | ReturnType<typeof setUsersAC>;
 
-export type UsersStateType = typeof initialState
-/*export type UsersItem = {
-    id: string
-    photo: string
-    fullName: string
-    followed: boolean
-    status: string
-    location: {
-        city: string
-        country: string
-    }
-}
-export type PostsType = Array<PostsTypeObject>
-export type PostsTypeObject = {
-    id: number
-    message: string
-    like: number
-}*/
-
-export type UsersItemType = {
-    "name": string
-    "id": number
-    "photos": {
-        "small": null
-        "large": null
-    },
-    "status": null
-    "followed": boolean
-}
 
 
-let initialState = {
-    "items": [] as Array<UsersItemType>,
-    "totalCount": 30,
-    "error": null
+let initialState:UsersStateType = {
+    items: [],
+    totalCount: 30,
+    error: 'null'
 }
 
 export const usersReducer = (state: UsersStateType = initialState, action: UsersActionType): UsersStateType => {

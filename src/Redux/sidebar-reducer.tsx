@@ -16,6 +16,7 @@ let initialState = {
         {id: "/news", item: "News"},
         {id: "/music", item: "Music"},
         {id: "/settings", item: "Settings"},
+        {id: "/users", item: "Users"}
 
     ],
     additionally: "Friends"
