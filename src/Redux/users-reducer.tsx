@@ -13,6 +13,7 @@ export type UsersActionType =
 
 let initialState:UsersStateType = {
     items: [],
+    pageSize:0,
     totalCount: 30,
     error: 'null'
 }

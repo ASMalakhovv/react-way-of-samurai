@@ -10,6 +10,7 @@ export type UsersItemType = {
 }
 export type UsersStateType = {
     items:Array<UsersItemType>
+    pageSize:number
     totalCount:number
     error:string
 }

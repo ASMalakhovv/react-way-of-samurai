@@ -3,6 +3,7 @@ import React from "react";
 import userPhoto from '../../assets/images/images.png'
 import {UsersStateType} from "../../types/entities";
 import {UsersPropsType} from "./UsersContainer";
+import style from './Users.module.css'
 
 class UsersC extends React.Component<UsersPropsType> {
     componentDidMount() {
@@ -16,6 +17,13 @@ class UsersC extends React.Component<UsersPropsType> {
     render() {
         return (
             <div>
+                <div>
+                    <span className={style.number}>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                </div>
                 {this.props.users.map(u =>
                     <div key={u.id}>
                     <span>
