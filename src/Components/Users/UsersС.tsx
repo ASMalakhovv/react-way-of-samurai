@@ -7,7 +7,16 @@ import style from './Users.module.css'
 
 class UsersC extends React.Component<UsersPropsType> {
     componentDidMount() {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users")
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then((response: AxiosResponse<UsersStateType>) => {
+                let users = response.data.items
+                this.props.onClickSetUsersHandler(users)
+            })
+    }
+
+    changePageHandler = (current: number) => {
+        this.props.onClickSetCurrentPage(current)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${current}&count=${this.props.pageSize}`)
             .then((response: AxiosResponse<UsersStateType>) => {
                 let users = response.data.items
                 this.props.onClickSetUsersHandler(users)
@@ -15,14 +24,22 @@ class UsersC extends React.Component<UsersPropsType> {
     }
 
     render() {
+        let numberPages: number = Math.ceil(this.props.totalCount / this.props.pageSize)
+        let arrayPages: number[] = [];
+        for (let i = 1; i <= numberPages; i++) {
+            arrayPages.push(i)
+        }
+
         return (
             <div>
                 <div>
-                    <span className={style.number}>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
+                    {arrayPages.map(n => {
+                            return (
+                                <span className={this.props.currentPage === n ? style.number : ""}
+                                      onClick={() => this.changePageHandler(n)}>{n}</span>
+                            )
+                        }
+                    )}
                 </div>
                 {this.props.users.map(u =>
                     <div key={u.id}>

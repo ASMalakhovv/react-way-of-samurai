@@ -1,31 +1,39 @@
 import {v1} from "uuid";
 import {UsersItemType, UsersStateType} from "../types/entities";
 
-const FOLLOW = "FOLLOW";
-const UNFOLLOW = "UNFOLLOW";
-const SETUSERS = "SET-USERS";
+export enum USER_REDUCER_TYPE {
+    FOLLOW = "FOLLOW",
+    UNFOLLOW = "UNFOLLOW",
+    SETUSERS = "SET-USERS",
+    SETCURRENTPAGE = "SET-CURRENT-PAGE"
+}
+
+
 export type UsersActionType =
     ReturnType<typeof followAC>
     | ReturnType<typeof unFollowAC>
-    | ReturnType<typeof setUsersAC>;
+    | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof setCurrentPageAC>;
 
 
-
-let initialState:UsersStateType = {
+let initialState: UsersStateType = {
     items: [],
-    pageSize:0,
+    pageSize: 5,
+    currentPage: 2,
     totalCount: 30,
     error: 'null'
 }
 
 export const usersReducer = (state: UsersStateType = initialState, action: UsersActionType): UsersStateType => {
     switch (action.type) {
-        case FOLLOW:
+        case USER_REDUCER_TYPE.FOLLOW:
             return {...state, "items": state.items.map(u => u.id === action.id ? {...u, followed: true} : u)};
-        case UNFOLLOW:
+        case USER_REDUCER_TYPE.UNFOLLOW:
             return {...state, "items": state.items.map(u => u.id === action.id ? {...u, followed: false} : u)};
-        case SETUSERS:
+        case USER_REDUCER_TYPE.SETUSERS:
             return {...state, "items": [...action.users]};
+        case USER_REDUCER_TYPE.SETCURRENTPAGE:
+            return {...state, currentPage: action.current}
         default:
             return state;
     }
@@ -34,20 +42,27 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
 
 export const followAC = (id: number) => {
     return {
-        type: FOLLOW,
+        type: USER_REDUCER_TYPE.FOLLOW,
         id
     } as const
 };
 export const unFollowAC = (id: number) => {
     return {
-        type: UNFOLLOW,
+        type: USER_REDUCER_TYPE.UNFOLLOW,
         id
     } as const
 };
 
 export const setUsersAC = (users: Array<UsersItemType>) => {
     return {
-        type: SETUSERS,
+        type: USER_REDUCER_TYPE.SETUSERS,
         users
     } as const
 };
+
+export const setCurrentPageAC = (current: number) => {
+    return {
+        type: USER_REDUCER_TYPE.SETCURRENTPAGE,
+        current,
+    } as const
+}
