@@ -5,7 +5,8 @@ export enum USER_REDUCER_TYPE {
     FOLLOW = "FOLLOW",
     UNFOLLOW = "UNFOLLOW",
     SETUSERS = "SET-USERS",
-    SETCURRENTPAGE = "SET-CURRENT-PAGE"
+    SETCURRENTPAGE = "SET-CURRENT-PAGE",
+    SETTOTALCOUNT = "SET-TOTAL-COUNT",
 }
 
 
@@ -13,14 +14,15 @@ export type UsersActionType =
     ReturnType<typeof followAC>
     | ReturnType<typeof unFollowAC>
     | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>;
+    | ReturnType<typeof setCurrentPageAC>
+    | ReturnType<typeof setTotalCountAC>
 
 
 let initialState: UsersStateType = {
     items: [],
     pageSize: 5,
-    currentPage: 2,
-    totalCount: 30,
+    currentPage: 1,
+    totalCount: 0,
     error: 'null'
 }
 
@@ -33,7 +35,9 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
         case USER_REDUCER_TYPE.SETUSERS:
             return {...state, "items": [...action.users]};
         case USER_REDUCER_TYPE.SETCURRENTPAGE:
-            return {...state, currentPage: action.current}
+            return {...state, currentPage: action.current};
+        case USER_REDUCER_TYPE.SETTOTALCOUNT:
+            return {...state, totalCount: action.totalCount}
         default:
             return state;
     }
@@ -64,5 +68,12 @@ export const setCurrentPageAC = (current: number) => {
     return {
         type: USER_REDUCER_TYPE.SETCURRENTPAGE,
         current,
+    } as const
+}
+
+export const setTotalCountAC = (totalCount: number) => {
+    return {
+        type: USER_REDUCER_TYPE.SETTOTALCOUNT,
+        totalCount,
     } as const
 }

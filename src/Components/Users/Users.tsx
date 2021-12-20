@@ -1,62 +1,54 @@
-import axios from 'axios';
-import {AxiosResponse} from 'axios';
 import React from 'react';
-import {v1} from 'uuid';
-import {UsersPropsType} from './UsersContainer';
-import userPhoto from '../../assets/images/images.png'
-import { UsersStateType } from '../../types/entities';
+import userPhoto from '../../assets/images/images.png';
+import style from "./Users.module.css";
+import {UsersItemType} from "../../types/entities";
 
+export type UsersPropsType = {
+    totalCount: number
+    pageSize: number
+    currentPage: number
+    changePageHandler: (current: number) => void
+    users: Array<UsersItemType>
+    onClickFollowHandler: (id: number) => void
+    onClickUnFollowHandler: (id: number) => void
+}
 
 export function Users(props: UsersPropsType) {
-    const getUser = () => {
-        if (props.users.length === 0) {
-            axios.get("https://social-network.samuraijs.com/api/1.0/users")
-                .then((response: AxiosResponse<UsersStateType>) => {
-                    debugger
-                    let users = response.data.items
-                    props.onClickSetUsersHandler(users)
-                })
-            /*props.onClickSetUsersHandler([{
-                    id: v1(),
-                    photo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqF1A-aVPO9c2a0eogj2k_SUsLPqiM1CciEA&usqp=CAU",
-                    fullName: "Aleksandr",
-                    followed: true,
-                    status: "I am happy",
-                    location: {city: "Omsk", country: "Russia"}
-                },
-                {
-                    id: v1(),
-                    photo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5JtDCsJCCd8PIYySEMcIgkN7wmDwLUNPCBg&usqp=CAU",
-                    fullName: "Dmitry",
-                    followed: false,
-                    status: "Hello world",
-                    location: {city: "Omsk", country: "Russia"}
-                },
-                {
-                    id: v1(),
-                    photo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgT9Tjg9qTirti-TR4763fWWVblKJhaBGfCQ&usqp=CAU",
-                    fullName: "Dimych",
-                    followed: true,
-                    status: "I am teacher",
-                    location: {city: "Minsk", country: "Belarus"}
-                }
-            ])*/
-        }
+
+
+    let numberPages: number = Math.ceil((props.totalCount - 16300) / props.pageSize)
+    let arrayPages: number[] = [];
+    for (let i = 1; i <= numberPages; i++) {
+        arrayPages.push(i)
     }
-    let user = props.users.map( u =>
-        <div key={u.id}>
+
+
+    return (
+        <div>
+            <div>
+                {arrayPages.map(n => {
+                        return (
+                            <span className={props.currentPage === n ? style.number : ""}
+                                  onClick={() => props.changePageHandler(n)}>{n}</span>
+                        )
+                    }
+                )}
+            </div>
+            {props.users.map(u =>
+                <div key={u.id}>
                     <span>
                         <div>
                             <img src={u.photos.small || userPhoto}
                                  width={'50px'}/>
                         </div>
                         <div>
-                            {u.followed ? <button onClick={() => props.onClickUnFollowHandler(u.id)}>Follow</button> :
+                            {u.followed ?
+                                <button onClick={() => props.onClickUnFollowHandler(u.id)}>Follow</button> :
                                 <button onClick={() => props.onClickFollowHandler(u.id)}>UnFollow</button>}
 
                         </div>
                     </span>
-            <span>
+                    <span>
                         <span>
                             <div>{u.name}</div>
                             <div>{u.status}</div>
@@ -67,11 +59,7 @@ export function Users(props: UsersPropsType) {
                         </span>
 
                     </span>
-        </div>)
-    return (
-        <div>
-            <button onClick={getUser}>Get User</button>
-            {user}
+                </div>)}
         </div>
     )
 }
