@@ -13,6 +13,7 @@ import React from "react";
 import axios, {AxiosResponse} from "axios";
 import {Users} from "./Users";
 import preload from "../../assets/images/preload.svg"
+import {Preloader} from "../common/Preloader/Preloader";
 
 
 export type MapStateToProps = {
@@ -51,7 +52,7 @@ class UsersContainerComponent extends React.Component<UsersPropsType> {
     render() {
         return <>
             <div>
-                {this.props.isFetching && <img src={preload}/>}
+                {this.props.isFetching && <Preloader />}
             </div>
             <Users
                 totalCount={this.props.totalCount}
