@@ -1,5 +1,4 @@
-import {v1} from "uuid";
-import {UsersItemType, UsersStateType} from "../types/entities";
+import {UsersItemType} from "../types/entities";
 
 export enum USER_REDUCER_TYPE {
     FOLLOW = "FOLLOW",
@@ -7,6 +6,7 @@ export enum USER_REDUCER_TYPE {
     SETUSERS = "SET-USERS",
     SETCURRENTPAGE = "SET-CURRENT-PAGE",
     SETTOTALCOUNT = "SET-TOTAL-COUNT",
+    TOGGLEISFETCHING = "TOGGLE-IS-FETCHING",
 }
 
 
@@ -16,17 +16,26 @@ export type UsersActionType =
     | ReturnType<typeof setUsersAC>
     | ReturnType<typeof setCurrentPageAC>
     | ReturnType<typeof setTotalCountAC>
+    | ReturnType<typeof toggleIsFetchingAC>
 
-
-let initialState: UsersStateType = {
+export type UsersInitialStateType = {
+    items:Array<UsersItemType>
+    currentPage:number
+    pageSize:number
+    totalCount:number
+    error:string
+    isFetching:boolean
+}
+let initialState: UsersInitialStateType = {
     items: [],
     pageSize: 5,
     currentPage: 1,
     totalCount: 0,
-    error: 'null'
+    error: 'null',
+    isFetching:false,
 }
 
-export const usersReducer = (state: UsersStateType = initialState, action: UsersActionType): UsersStateType => {
+export const usersReducer = (state: UsersInitialStateType = initialState, action: UsersActionType): UsersInitialStateType => {
     switch (action.type) {
         case USER_REDUCER_TYPE.FOLLOW:
             return {...state, "items": state.items.map(u => u.id === action.id ? {...u, followed: true} : u)};
@@ -37,7 +46,9 @@ export const usersReducer = (state: UsersStateType = initialState, action: Users
         case USER_REDUCER_TYPE.SETCURRENTPAGE:
             return {...state, currentPage: action.current};
         case USER_REDUCER_TYPE.SETTOTALCOUNT:
-            return {...state, totalCount: action.totalCount}
+            return {...state, totalCount: action.totalCount};
+        case USER_REDUCER_TYPE.TOGGLEISFETCHING:
+            return {...state, isFetching:action.isFetching}
         default:
             return state;
     }
@@ -76,4 +87,11 @@ export const setTotalCountAC = (totalCount: number) => {
         type: USER_REDUCER_TYPE.SETTOTALCOUNT,
         totalCount,
     } as const
+}
+
+export const toggleIsFetchingAC = (isFetching:boolean) => {
+  return {
+      type: USER_REDUCER_TYPE.TOGGLEISFETCHING,
+      isFetching
+  } as const
 }
