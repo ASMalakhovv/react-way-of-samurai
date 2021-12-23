@@ -5,10 +5,10 @@ import NavBar from "./Components/Navbar/Navbar";
 import {Music} from "./Components/Music/Music";
 import {News} from "./Components/News/News";
 import {Settings} from "./Components/Settings/Settings";
-import Profile from "./Components/Profile/Profile";
 import {Route} from "react-router-dom";
 import {DialogsContainer} from './Components/Dialods/DialogsContainer';
 import {UsersContainer} from './Components/Users/UsersContainer';
+import ProfileContainer from "./Components/Profile/ProfileContainer";
 
 
 
@@ -20,7 +20,7 @@ function App() {
             <NavBar />
             <div className="app-wrapper-content">
                 <Route path="/message" component={DialogsContainer}/>
-                <Route path="/profile" render={() => <Profile />}/>
+                <Route path="/profile" component={ProfileContainer}/>
                 <Route path="/users" render={() => <UsersContainer/>}/>
                 <Route path="/news" component={News}/>
                 <Route path="/music" component={Music}/>

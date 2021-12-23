@@ -1,8 +1,8 @@
 import {
-    addNewPostActionCreator,
+    addNewPost,
     PostsType,
     ProfileActionType,
-    updateNewPostTextActionCreator
+    updateNewPostText
 } from "../../../../Redux/profile-reducer";
 import {MyPosts} from "./My_posts";
 import {AppStateType} from "../../../../Redux/redux-store";
@@ -28,10 +28,10 @@ export type mapDispatchPropsType = {
 let mapDispatchProps = (dispatch: (action: ProfileActionType) => void): mapDispatchPropsType => {
     return {
         onClickPostHandler: () => {
-            dispatch(addNewPostActionCreator())
+            dispatch(addNewPost())
         },
         onChangeHandler: (text: string) => {
-            dispatch(updateNewPostTextActionCreator(text))
+            dispatch(updateNewPostText(text))
         }
     }
 }

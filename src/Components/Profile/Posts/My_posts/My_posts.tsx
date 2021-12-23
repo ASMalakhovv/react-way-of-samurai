@@ -1,12 +1,11 @@
 import React, {ChangeEvent} from "react";
 import s from './My_posts.module.css'
 import {Posts} from "../Post";
-import {addNewPostActionCreator, PostsType, updateNewPostTextActionCreator} from "../../../../Redux/profile-reducer";
+import {addNewPost, PostsType, updateNewPostText} from "../../../../Redux/profile-reducer";
 import { MyPostPropsType } from "./My_postsContainer";
 
 
 export function MyPosts(props: MyPostPropsType) {
-    debugger;
     const onClickPostHandler = () => {
         if(props.newPostText.trim()) {
             props.onClickPostHandler();

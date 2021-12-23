@@ -1,13 +1,19 @@
+import {ContactsUsersProfile, PhotosUsersProfile, ProfileUser} from "../types/entities";
+
 const ADD_NEW_POST = "ADD-NEW-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const SET_PROFILE_USER = "SET-PROFILE-USER"
 export type ProfileActionType =
-    ReturnType<typeof addNewPostActionCreator>
-    | ReturnType<typeof updateNewPostTextActionCreator>;
+    ReturnType<typeof addNewPost>
+    | ReturnType<typeof updateNewPostText>
+    | ReturnType<typeof setProfileUser>;
+
 
 export type ProfileStateType = {
     newPostText: string
     posts: PostsType
     addressImage: string
+    profileUser: ProfileUser
 }
 export type PostsType = Array<PostsTypeObject>
 export type PostsTypeObject = {
@@ -23,7 +29,28 @@ let initialState: ProfileStateType = {
         {id: 1, message: "Hi, how are you", like: 15},
         {id: 2, message: "It's my first post", like: 10}
     ],
-    addressImage: "https://assets.bellator.com/andrey_koreshkov_1990/08/23_banner/original-1619507089.jpg"
+    addressImage: "https://assets.bellator.com/andrey_koreshkov_1990/08/23_banner/original-1619507089.jpg",
+    profileUser: {
+        aboutMe: "",
+        contacts: {
+            facebook: "",
+            website: "",
+            vk: "",
+            twitter: "",
+            instagram: "",
+            youtube: "",
+            github: "",
+            mainLink: "",
+        },
+        lookingForAJob: false,
+        lookingForAJobDescription: "",
+        fullName: "",
+        userId: 1,
+        photos: {
+            small: "",
+            large: ""
+        },
+    },
 }
 
 const profileReducer = (state: ProfileStateType = initialState, action: ProfileActionType): ProfileStateType => {
@@ -37,6 +64,8 @@ const profileReducer = (state: ProfileStateType = initialState, action: ProfileA
             };
         case UPDATE_NEW_POST_TEXT:
             return {...state, newPostText: action.changeValue};
+        case SET_PROFILE_USER:
+            return {...state, profileUser:action.profileUser}
         default:
             return state;
     }
@@ -44,16 +73,23 @@ const profileReducer = (state: ProfileStateType = initialState, action: ProfileA
 
 export default profileReducer;
 
-export const addNewPostActionCreator = () => {
+export const addNewPost = () => {
 
     return {
         type: ADD_NEW_POST
     } as const
 }
-export const updateNewPostTextActionCreator = (value: string) => {
+export const updateNewPostText = (value: string) => {
 
     return {
         type: UPDATE_NEW_POST_TEXT,
         changeValue: value
     } as const
 };
+
+export const setProfileUser = (profileUser: ProfileUser) => {
+    return {
+        type: SET_PROFILE_USER,
+        profileUser
+    } as const
+}
