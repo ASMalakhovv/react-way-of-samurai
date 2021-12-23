@@ -7,26 +7,20 @@ import {News} from "./Components/News/News";
 import {Settings} from "./Components/Settings/Settings";
 import Profile from "./Components/Profile/Profile";
 import {Route} from "react-router-dom";
-import {StateType, ActionType} from './Redux/Store'
 import {DialogsContainer} from './Components/Dialods/DialogsContainer';
 import {UsersContainer} from './Components/Users/UsersContainer';
 
 
-type AppPropsType = {
-    state: StateType
-    dispatch?: (action: ActionType) => void
-}
 
-function App(props: AppPropsType) {
+function App() {
     return (
 
         <div className="app-wrapper">
             <Header/>
-            <NavBar state={props.state.sidebar}
-                    dialogsFriends={props.state.dialogsPage.dialogs}/>
+            <NavBar />
             <div className="app-wrapper-content">
                 <Route path="/message" component={DialogsContainer}/>
-                <Route path="/profile" render={() => <Profile state={props.state.profilePage}/>}/>
+                <Route path="/profile" render={() => <Profile />}/>
                 <Route path="/users" render={() => <UsersContainer/>}/>
                 <Route path="/news" component={News}/>
                 <Route path="/music" component={Music}/>

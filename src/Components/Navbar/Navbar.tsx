@@ -1,18 +1,18 @@
 import React from "react";
-import {DialogItemType} from "../../Redux/dialogs-reducer";
-import {SideBarType} from "../../Redux/sidebar-reducer";
 import s from './Navbar.module.css'
 import {NavBarItem} from "./NavBarItem/NavBarItem";
 import {NavFriends} from "./NavFriends/NavFriends";
+import {useSelector} from "react-redux";
+import {AppStateType} from "../../Redux/redux-store";
+import {SideBarType, TitleBarType} from "../../Redux/sidebar-reducer";
+import {DialogItemType} from "../../Redux/dialogs-reducer";
 
-type NavBarPropsType = {
-    state: SideBarType
-    dialogsFriends: Array<DialogItemType>
-}
 
-function NavBar(props: NavBarPropsType) {
-    const navBarItem = props.state.title.map(s => <NavBarItem id={s.id} item={s.item}/>)
-    const navBarFriends = props.dialogsFriends.filter(f => f.id <= 3)
+function NavBar() {
+    const navBarState = useSelector<AppStateType, SideBarType>(state => state.sidebar)
+    const friendsState = useSelector<AppStateType, Array<DialogItemType>>(state=> state.dialogsPage.dialogs)
+    const navBarItem = navBarState.title.map(s => <NavBarItem id={s.id} item={s.item}/>)
+    const navBarFriends = friendsState.filter(f => f.id <= 3)
     const friendsBests = navBarFriends.map(f => <NavFriends img={f.img} name={f.name}/>)
     return (
 
@@ -22,7 +22,7 @@ function NavBar(props: NavBarPropsType) {
             </div>
             <div className={s.navFriends}>
                 <div className={s.navAdditionally}>
-                    <h1>{props.state.additionally}</h1>
+                    <h1>{navBarState.additionally}</h1>
                 </div>
                 <div className={s.navFriendsBests}>
                     {friendsBests}

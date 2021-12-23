@@ -2,6 +2,7 @@ import React from 'react';
 import userPhoto from '../../assets/images/images.png';
 import style from "./Users.module.css";
 import {UsersItemType} from "../../types/entities";
+import {NavLink} from 'react-router-dom';
 
 export type UsersPropsType = {
     totalCount: number
@@ -38,8 +39,10 @@ export function Users(props: UsersPropsType) {
                 <div key={u.id}>
                     <span>
                         <div>
+                            <NavLink to={'/profile/' + u.id}>
                             <img src={u.photos.small || userPhoto}
                                  width={'50px'}/>
+                                </NavLink>
                         </div>
                         <div>
                             {u.followed ?

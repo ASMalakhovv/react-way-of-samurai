@@ -11,12 +11,12 @@ export enum USER_REDUCER_TYPE {
 
 
 export type UsersActionType =
-    ReturnType<typeof followAC>
-    | ReturnType<typeof unFollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setTotalCountAC>
-    | ReturnType<typeof toggleIsFetchingAC>
+    ReturnType<typeof follow>
+    | ReturnType<typeof unFollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalCount>
+    | ReturnType<typeof toggleIsFetching>
 
 export type UsersInitialStateType = {
     items:Array<UsersItemType>
@@ -55,41 +55,41 @@ export const usersReducer = (state: UsersInitialStateType = initialState, action
 }
 
 
-export const followAC = (id: number) => {
+export const follow = (id: number) => {
     return {
         type: USER_REDUCER_TYPE.FOLLOW,
         id
     } as const
 };
-export const unFollowAC = (id: number) => {
+export const unFollow = (id: number) => {
     return {
         type: USER_REDUCER_TYPE.UNFOLLOW,
         id
     } as const
 };
 
-export const setUsersAC = (users: Array<UsersItemType>) => {
+export const setUsers = (users: Array<UsersItemType>) => {
     return {
         type: USER_REDUCER_TYPE.SETUSERS,
         users
     } as const
 };
 
-export const setCurrentPageAC = (current: number) => {
+export const setCurrentPage = (current: number) => {
     return {
         type: USER_REDUCER_TYPE.SETCURRENTPAGE,
         current,
     } as const
 }
 
-export const setTotalCountAC = (totalCount: number) => {
+export const setTotalCount = (totalCount: number) => {
     return {
         type: USER_REDUCER_TYPE.SETTOTALCOUNT,
         totalCount,
     } as const
 }
 
-export const toggleIsFetchingAC = (isFetching:boolean) => {
+export const toggleIsFetching = (isFetching:boolean) => {
   return {
       type: USER_REDUCER_TYPE.TOGGLEISFETCHING,
       isFetching
