@@ -26,8 +26,11 @@ export type MapStateToProps = {
 class UsersContainerComponent extends React.Component<UsersPropsType> {
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,{
+            withCredentials:true
+        })
             .then((response: AxiosResponse<UsersStateType>) => {
+                debugger
                 this.props.toggleIsFetching(false)
                 let users = response.data.items
                 let totalCount = response.data.totalCount
@@ -39,7 +42,9 @@ class UsersContainerComponent extends React.Component<UsersPropsType> {
     changePageHandler = (current: number) => {
         this.props.toggleIsFetching(true)
         this.props.setCurrentPage(current)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${current}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${current}&count=${this.props.pageSize}`,{
+            withCredentials:true
+        })
             .then((response: AxiosResponse<UsersStateType>) => {
                 this.props.toggleIsFetching(false)
                 let users = response.data.items

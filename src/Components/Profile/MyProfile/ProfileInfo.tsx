@@ -12,9 +12,7 @@ export function ProfileInfo(props:ProfileInfoProps) {
         return <Preloader />
     }
     return (
-        <div>
-            <img className={s.img} src={"https://assets.bellator.com/andrey_koreshkov_1990/08/23_banner/original-1619507089.jpg"}
-                 alt=""/>
+        <div className={s.img}>
             <div className={s.description}>
                 <img src={props.profileUser.photos.large}/>
                 ava+description

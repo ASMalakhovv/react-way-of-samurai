@@ -40,3 +40,23 @@ export type ProfileUser = {
     userId: number
     photos: PhotosUsersProfile
 }
+
+
+export type AuthMe = {
+    resultCode: number
+    messages: []
+    data: AuthMeData
+}
+
+export type AuthMeData = {
+    id: number | null
+    email: string | null
+    login: string | null
+}
+
+
+export type FollowDate = {
+    resultCode: number
+    messages: string[],
+    data: {}
+}

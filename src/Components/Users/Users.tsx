@@ -1,8 +1,9 @@
 import React from 'react';
 import userPhoto from '../../assets/images/images.png';
 import style from "./Users.module.css";
-import {UsersItemType} from "../../types/entities";
+import {FollowDate, UsersItemType, UsersStateType} from "../../types/entities";
 import {NavLink} from 'react-router-dom';
+import axios, {AxiosResponse} from "axios";
 
 export type UsersPropsType = {
     totalCount: number
@@ -46,8 +47,32 @@ export function Users(props: UsersPropsType) {
                         </div>
                         <div>
                             {u.followed ?
-                                <button onClick={() => props.onClickUnFollowHandler(u.id)}>Follow</button> :
-                                <button onClick={() => props.onClickFollowHandler(u.id)}>UnFollow</button>}
+                                <button onClick={() => {
+                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                        withCredentials: true,
+                                        headers: {
+                                            "API-KEY": '3d65a9ec-ab43-4f9c-b1c5-2bd296c92ebd'
+                                        }
+                                    })
+                                        .then((response: AxiosResponse<FollowDate>) => {
+                                            if (response.data.resultCode === 0) {
+                                                props.onClickUnFollowHandler(u.id)
+                                            }
+                                        })
+                                }}>UnFollow</button> :
+                                <button onClick={() => {
+                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                                        withCredentials: true,
+                                        headers: {
+                                            "API-KEY": '3d65a9ec-ab43-4f9c-b1c5-2bd296c92ebd'
+                                        }
+                                    })
+                                        .then((response: AxiosResponse<FollowDate>) => {
+                                            if (response.data.resultCode === 0) {
+                                                props.onClickFollowHandler(u.id)
+                                            }
+                                        })
+                                }}>Follow</button>}
 
                         </div>
                     </span>

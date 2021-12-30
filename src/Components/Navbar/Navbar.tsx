@@ -4,7 +4,7 @@ import {NavBarItem} from "./NavBarItem/NavBarItem";
 import {NavFriends} from "./NavFriends/NavFriends";
 import {useSelector} from "react-redux";
 import {AppStateType} from "../../Redux/redux-store";
-import {SideBarType, TitleBarType} from "../../Redux/sidebar-reducer";
+import {SideBarType} from "../../Redux/sidebar-reducer";
 import {DialogItemType} from "../../Redux/dialogs-reducer";
 
 

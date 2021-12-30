@@ -19,12 +19,12 @@ export type UsersActionType =
     | ReturnType<typeof toggleIsFetching>
 
 export type UsersInitialStateType = {
-    items:Array<UsersItemType>
-    currentPage:number
-    pageSize:number
-    totalCount:number
-    error:string
-    isFetching:boolean
+    items: Array<UsersItemType>
+    currentPage: number
+    pageSize: number
+    totalCount: number
+    error: string
+    isFetching: boolean
 }
 let initialState: UsersInitialStateType = {
     items: [],
@@ -32,7 +32,7 @@ let initialState: UsersInitialStateType = {
     currentPage: 1,
     totalCount: 0,
     error: 'null',
-    isFetching:false,
+    isFetching: false,
 }
 
 export const usersReducer = (state: UsersInitialStateType = initialState, action: UsersActionType): UsersInitialStateType => {
@@ -48,7 +48,7 @@ export const usersReducer = (state: UsersInitialStateType = initialState, action
         case USER_REDUCER_TYPE.SETTOTALCOUNT:
             return {...state, totalCount: action.totalCount};
         case USER_REDUCER_TYPE.TOGGLEISFETCHING:
-            return {...state, isFetching:action.isFetching}
+            return {...state, isFetching: action.isFetching}
         default:
             return state;
     }
@@ -89,9 +89,9 @@ export const setTotalCount = (totalCount: number) => {
     } as const
 }
 
-export const toggleIsFetching = (isFetching:boolean) => {
-  return {
-      type: USER_REDUCER_TYPE.TOGGLEISFETCHING,
-      isFetching
-  } as const
+export const toggleIsFetching = (isFetching: boolean) => {
+    return {
+        type: USER_REDUCER_TYPE.TOGGLEISFETCHING,
+        isFetching
+    } as const
 }
