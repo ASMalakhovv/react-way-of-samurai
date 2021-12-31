@@ -11,15 +11,14 @@ class HeaderContainer extends React.Component<HeaderContainerProps> {
     componentDidMount() {
         axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
             withCredentials: true
-        })
-            .then((response: AxiosResponse<AuthMe>) => {
-                if (response.data.resultCode === 0) {
-                    let {id, email, login} = response.data.data
-                    if (id !== null && email !== null && login !== null) {
-                        this.props.authSetUser(id, email, login)
-                    }
+        }).then((response: AxiosResponse<AuthMe>) => {
+            if (response.data.resultCode === 0) {
+                let {id, email, login} = response.data.data
+                if (id !== null && email !== null && login !== null) {
+                    this.props.authSetUser(id, email, login)
                 }
-            })
+            }
+        })
     }
 
     render() {
@@ -31,16 +30,16 @@ class HeaderContainer extends React.Component<HeaderContainerProps> {
 
 type HeaderContainerProps = MapStateToPropsType & MapDispatchToPropsType
 type MapStateToPropsType = {
-    isAuth:boolean
-    id:number|null
+    isAuth: boolean
+    id: number | null
 }
 type MapDispatchToPropsType = {
     authSetUser: (id: number, email: string, login: string) => void
 }
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        isAuth:state.auth.isAuth,
-        id:state.auth.id
+        isAuth: state.auth.isAuth,
+        id: state.auth.id
     }
 
 }
