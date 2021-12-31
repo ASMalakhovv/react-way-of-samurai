@@ -9,10 +9,9 @@ import {
 } from "../../Redux/users-reducer"
 import {UsersItemType, UsersStateType} from "../../types/entities"
 import React from "react";
-import axios, {AxiosResponse} from "axios";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
-import {getUsers} from "../../api/api";
+import {usersAPI} from "../../api/api";
 
 
 export type MapStateToProps = {
@@ -27,7 +26,7 @@ export type MapStateToProps = {
 class UsersContainerComponent extends React.Component<UsersPropsType> {
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        getUsers(this.props.currentPage, this.props.pageSize).then((data: UsersStateType) => {
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((data: UsersStateType) => {
             this.props.toggleIsFetching(false)
             let users = data.items
             let totalCount = data.totalCount
@@ -39,7 +38,7 @@ class UsersContainerComponent extends React.Component<UsersPropsType> {
     changePageHandler = (current: number) => {
         this.props.toggleIsFetching(true)
         this.props.setCurrentPage(current)
-        getUsers(current, this.props.pageSize).then((data: UsersStateType) => {
+        usersAPI.getUsers(current, this.props.pageSize).then((data: UsersStateType) => {
             this.props.toggleIsFetching(false)
             let users = data.items
             this.props.setUsers(users)

@@ -4,6 +4,7 @@ import style from "./Users.module.css";
 import {FollowDate, UsersItemType, UsersStateType} from "../../types/entities";
 import {NavLink} from 'react-router-dom';
 import axios, {AxiosResponse} from "axios";
+import {usersAPI} from "../../api/api";
 
 export type UsersPropsType = {
     totalCount: number
@@ -17,13 +18,11 @@ export type UsersPropsType = {
 
 export function Users(props: UsersPropsType) {
 
-
     let numberPages: number = Math.ceil((props.totalCount - 16300) / props.pageSize)
     let arrayPages: number[] = [];
     for (let i = 1; i <= numberPages; i++) {
         arrayPages.push(i)
     }
-
 
     return (
         <div>
@@ -48,27 +47,17 @@ export function Users(props: UsersPropsType) {
                         <div>
                             {u.followed ?
                                 <button onClick={() => {
-                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                        withCredentials: true,
-                                        headers: {
-                                            "API-KEY": '3d65a9ec-ab43-4f9c-b1c5-2bd296c92ebd'
-                                        }
-                                    })
-                                        .then((response: AxiosResponse<FollowDate>) => {
-                                            if (response.data.resultCode === 0) {
+                                    usersAPI.unFollowUser(u.id)
+                                        .then((data:FollowDate) => {
+                                            if (data.resultCode === 0) {
                                                 props.onClickUnFollowHandler(u.id)
                                             }
                                         })
                                 }}>UnFollow</button> :
                                 <button onClick={() => {
-                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
-                                        withCredentials: true,
-                                        headers: {
-                                            "API-KEY": '3d65a9ec-ab43-4f9c-b1c5-2bd296c92ebd'
-                                        }
-                                    })
-                                        .then((response: AxiosResponse<FollowDate>) => {
-                                            if (response.data.resultCode === 0) {
+                                    usersAPI.followUser(u.id)
+                                        .then((data:FollowDate) => {
+                                            if (data.resultCode === 0) {
                                                 props.onClickFollowHandler(u.id)
                                             }
                                         })
