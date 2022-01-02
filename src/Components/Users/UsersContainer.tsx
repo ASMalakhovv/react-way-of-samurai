@@ -4,7 +4,7 @@ import {
     follow,
     setCurrentPage,
     setTotalCount,
-    setUsers, toggleIsFetching,
+    setUsers, toggleFollowingProgress, toggleIsFetching,
     unFollow,
 } from "../../Redux/users-reducer"
 import {UsersItemType, UsersStateType} from "../../types/entities"
@@ -20,6 +20,8 @@ export type MapStateToProps = {
     totalCount: number
     currentPage: number
     isFetching: boolean
+    receivedForButton: boolean
+    arrUserForButton:number[]
 }
 
 
@@ -47,9 +49,9 @@ class UsersContainerComponent extends React.Component<UsersPropsType> {
 
     render() {
         return <>
-            <div>
+            {/*<div>
                 {this.props.isFetching && <Preloader/>}
-            </div>
+            </div>*/}
             <Users
                 totalCount={this.props.totalCount}
                 pageSize={this.props.pageSize}
@@ -58,6 +60,9 @@ class UsersContainerComponent extends React.Component<UsersPropsType> {
                 users={this.props.users}
                 onClickFollowHandler={this.props.follow}
                 onClickUnFollowHandler={this.props.unFollow}
+                toggleFollowingProgress={this.props.toggleFollowingProgress}
+                receivedForButton={this.props.receivedForButton}
+                arrUserForButton={this.props.arrUserForButton}
             />
         </>
     }
@@ -70,7 +75,9 @@ function mapStateToProps(state: AppStateType): MapStateToProps {
         pageSize: state.usersPage.pageSize,
         totalCount: state.usersPage.totalCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        receivedForButton: state.usersPage.receivedForButton,
+        arrUserForButton:state.usersPage.arrUserForButton
     }
 }
 
@@ -85,6 +92,7 @@ export type MapDispatchToPropsType = {
     setCurrentPage: (current: number) => void
     setTotalCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
+    toggleFollowingProgress: (receivedForButton: boolean,userID:number) => void
 }
 
 export const UsersContainer = connect<MapStateToProps, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
@@ -95,4 +103,6 @@ export const UsersContainer = connect<MapStateToProps, MapDispatchToPropsType, {
         setCurrentPage,
         setTotalCount,
         toggleIsFetching,
+        toggleFollowingProgress,
+
     })(UsersContainerComponent)

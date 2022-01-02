@@ -7,6 +7,7 @@ export enum USER_REDUCER_TYPE {
     SETCURRENTPAGE = "SET-CURRENT-PAGE",
     SETTOTALCOUNT = "SET-TOTAL-COUNT",
     TOGGLEISFETCHING = "TOGGLE-IS-FETCHING",
+    TOGGLEFOLLOWINGPROGRESS = "TOGGLE-FOLLOWING-PROGRESS",
 }
 
 
@@ -17,6 +18,7 @@ export type UsersActionType =
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalCount>
     | ReturnType<typeof toggleIsFetching>
+    | ReturnType<typeof toggleFollowingProgress>
 
 export type UsersInitialStateType = {
     items: Array<UsersItemType>
@@ -25,6 +27,8 @@ export type UsersInitialStateType = {
     totalCount: number
     error: string
     isFetching: boolean
+    receivedForButton: false
+    arrUserForButton: number[]
 }
 let initialState: UsersInitialStateType = {
     items: [],
@@ -33,6 +37,9 @@ let initialState: UsersInitialStateType = {
     totalCount: 0,
     error: 'null',
     isFetching: false,
+    receivedForButton: false,
+    arrUserForButton: []
+
 }
 
 export const usersReducer = (state: UsersInitialStateType = initialState, action: UsersActionType): UsersInitialStateType => {
@@ -48,7 +55,14 @@ export const usersReducer = (state: UsersInitialStateType = initialState, action
         case USER_REDUCER_TYPE.SETTOTALCOUNT:
             return {...state, totalCount: action.totalCount};
         case USER_REDUCER_TYPE.TOGGLEISFETCHING:
-            return {...state, isFetching: action.isFetching}
+            return {...state, isFetching: action.isFetching};
+        case USER_REDUCER_TYPE.TOGGLEFOLLOWINGPROGRESS:
+            return {
+                ...state, arrUserForButton:
+                    action.receivedForButton ? [...state.arrUserForButton, action.userID]
+                        : state.arrUserForButton.filter(id => id !== action.userID)
+            }
+
         default:
             return state;
     }
@@ -93,5 +107,13 @@ export const toggleIsFetching = (isFetching: boolean) => {
     return {
         type: USER_REDUCER_TYPE.TOGGLEISFETCHING,
         isFetching
+    } as const
+}
+
+export const toggleFollowingProgress = (receivedForButton: boolean, userID: number) => {
+    return {
+        type: USER_REDUCER_TYPE.TOGGLEFOLLOWINGPROGRESS,
+        receivedForButton,
+        userID
     } as const
 }
