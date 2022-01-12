@@ -1,9 +1,8 @@
 import React from 'react';
 import userPhoto from '../../assets/images/images.png';
 import style from "./Users.module.css";
-import {FollowDate, UsersItemType} from "../../types/entities";
+import {UsersItemType} from "../../types/entities";
 import {NavLink} from 'react-router-dom';
-import {usersAPI} from "../../api/api";
 
 export type UsersPropsType = {
     totalCount: number
@@ -13,9 +12,8 @@ export type UsersPropsType = {
     users: Array<UsersItemType>
     onClickFollowHandler: (id: number) => void
     onClickUnFollowHandler: (id: number) => void
-    toggleFollowingProgress: (receivedForButton: boolean, userID:number) => void
     receivedForButton: boolean
-    arrUserForButton:number[]
+    arrUserForButton: number[]
 }
 
 export function Users(props: UsersPropsType) {
@@ -46,25 +44,13 @@ export function Users(props: UsersPropsType) {
                         </div>
                         <div>
                             {u.followed ?
+                                <button disabled={props.arrUserForButton.some(id => id === u.id)}
+                                        onClick={() => {
+                                            props.onClickUnFollowHandler(u.id)
+                                        }}>UnFollow</button>
+                                :
                                 <button disabled={props.arrUserForButton.some(id => id === u.id)} onClick={() => {
-                                    props.toggleFollowingProgress(true,u.id)
-                                    usersAPI.unFollowUser(u.id)
-                                        .then((data: FollowDate) => {
-                                            props.toggleFollowingProgress(false,u.id)
-                                            if (data.resultCode === 0) {
-                                                props.onClickUnFollowHandler(u.id)
-                                            }
-                                        })
-                                }}>UnFollow</button> :
-                                <button disabled={props.arrUserForButton.some(id => id === u.id)} onClick={() => {
-                                    props.toggleFollowingProgress(true,u.id)
-                                    usersAPI.followUser(u.id)
-                                        .then((data: FollowDate) => {
-                                            props.toggleFollowingProgress(false,u.id)
-                                            if (data.resultCode === 0) {
-                                                props.onClickFollowHandler(u.id)
-                                            }
-                                        })
+                                    props.onClickFollowHandler(u.id)
                                 }}>Follow</button>}
 
                         </div>

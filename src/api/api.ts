@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {FollowDate, UsersStateType} from "../types/entities";
+import {AuthMe, FollowDate, ProfileUser, UsersStateType} from "../types/entities";
 
 const instance = axios.create({
     withCredentials: true,
@@ -16,16 +16,34 @@ export const usersAPI = {
                 return res.data
             })
     },
-    followUser(userID:number){
+    followUser(userID: number) {
         return instance.post(`follow/${userID}`)
             .then((response: AxiosResponse<FollowDate>) => {
                 return response.data
             })
     },
-    unFollowUser(userID:number){
-     return instance.delete(`follow/${userID}`)
-         .then((response: AxiosResponse<FollowDate>) => {
-             return response.data
-         })
+    unFollowUser(userID: number) {
+        return instance.delete(`follow/${userID}`)
+            .then((response: AxiosResponse<FollowDate>) => {
+                return response.data
+            })
     },
+}
+
+export const headerAPI = {
+    getAuthMe() {
+        return instance.get(`auth/me`)
+            .then((response: AxiosResponse<AuthMe>) => {
+                return response.data
+            })
+    }
+}
+
+export const profileAPI = {
+    getProfile(userId:string) {
+        return instance.get(`profile/${userId}`)
+            .then((response: AxiosResponse<ProfileUser>) => {
+                return response.data
+            })
+    }
 }

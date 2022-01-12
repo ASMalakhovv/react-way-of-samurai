@@ -1,4 +1,7 @@
-import {AuthMeData} from "../types/entities";
+import {AuthMe, AuthMeData} from "../types/entities";
+import {AppThunk} from "./redux-store";
+import {headerAPI} from "../api/api";
+import {AxiosResponse} from "axios";
 
 export enum AUTH_ME {
     SETUSERS = "SET-USERS-AUTH",
@@ -7,12 +10,12 @@ export enum AUTH_ME {
 
 
 export type AuthActionType =
-    | ReturnType<typeof authSetUser>;
+    | ReturnType<typeof setUser>;
 
 type AuthInitialState = typeof initialState
 
 type InitialStateType = {
-    isAuth:boolean
+    isAuth: boolean
 }
 
 let initialState: AuthMeData & InitialStateType = {
@@ -21,7 +24,6 @@ let initialState: AuthMeData & InitialStateType = {
     login: null,
     isAuth: false
 }
-
 
 
 const authReducer = (state: AuthInitialState = initialState, action: AuthActionType): AuthInitialState => {
@@ -36,7 +38,7 @@ const authReducer = (state: AuthInitialState = initialState, action: AuthActionT
             return state;
     }
 };
-export const authSetUser = (id: number, email: string, login: string) => {
+export const setUser = (id: number, email: string, login: string) => {
     return {
         type: AUTH_ME.SETUSERS,
         data: {
@@ -46,5 +48,20 @@ export const authSetUser = (id: number, email: string, login: string) => {
         }
     } as const;
 };
+
+
+export const authSetUser = (): AppThunk => async dispatch => {
+    try {
+        let data: AuthMe = await headerAPI.getAuthMe()
+        let {id, email, login} = data.data
+        if (data.resultCode === 0) {
+            if (id && email && login) {
+                dispatch(setUser(id, email, login))
+            }
+        }
+    } catch (e) {
+
+    }
+}
 
 export default authReducer;

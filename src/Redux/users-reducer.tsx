@@ -1,4 +1,6 @@
-import {UsersItemType} from "../types/entities";
+import {FollowDate, UsersItemType} from "../types/entities";
+import {AppThunk} from "./redux-store";
+import {usersAPI} from "../api/api";
 
 export enum USER_REDUCER_TYPE {
     FOLLOW = "FOLLOW",
@@ -12,8 +14,8 @@ export enum USER_REDUCER_TYPE {
 
 
 export type UsersActionType =
-    ReturnType<typeof follow>
-    | ReturnType<typeof unFollow>
+    ReturnType<typeof followSuccess>
+    | ReturnType<typeof unFollowSuccess>
     | ReturnType<typeof setUsers>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setTotalCount>
@@ -45,11 +47,11 @@ let initialState: UsersInitialStateType = {
 export const usersReducer = (state: UsersInitialStateType = initialState, action: UsersActionType): UsersInitialStateType => {
     switch (action.type) {
         case USER_REDUCER_TYPE.FOLLOW:
-            return {...state, "items": state.items.map(u => u.id === action.id ? {...u, followed: true} : u)};
+            return {...state, items: state.items.map(u => u.id === action.id ? {...u, followed: true} : u)};
         case USER_REDUCER_TYPE.UNFOLLOW:
-            return {...state, "items": state.items.map(u => u.id === action.id ? {...u, followed: false} : u)};
+            return {...state, items: state.items.map(u => u.id === action.id ? {...u, followed: false} : u)};
         case USER_REDUCER_TYPE.SETUSERS:
-            return {...state, "items": [...action.users]};
+            return {...state, items: [...action.users]};
         case USER_REDUCER_TYPE.SETCURRENTPAGE:
             return {...state, currentPage: action.current};
         case USER_REDUCER_TYPE.SETTOTALCOUNT:
@@ -69,13 +71,13 @@ export const usersReducer = (state: UsersInitialStateType = initialState, action
 }
 
 
-export const follow = (id: number) => {
+export const followSuccess = (id: number) => {
     return {
         type: USER_REDUCER_TYPE.FOLLOW,
         id
     } as const
 };
-export const unFollow = (id: number) => {
+export const unFollowSuccess = (id: number) => {
     return {
         type: USER_REDUCER_TYPE.UNFOLLOW,
         id
@@ -116,4 +118,40 @@ export const toggleFollowingProgress = (receivedForButton: boolean, userID: numb
         receivedForButton,
         userID
     } as const
+}
+
+export const getUsers = (currentPage: number, pageSize: number): AppThunk => async dispatch => {
+    try {
+        dispatch(toggleIsFetching(true))
+        let res = await usersAPI.getUsers(currentPage, pageSize)
+        dispatch(toggleIsFetching(false))
+        dispatch(setUsers(res.items))
+        dispatch(setTotalCount(res.totalCount))
+
+    } catch (e) {
+
+    }
+}
+
+
+export const follow = (userID: number): AppThunk => dispatch => {
+    dispatch(toggleFollowingProgress(true, userID))
+    usersAPI.followUser(userID)
+        .then((data: FollowDate) => {
+            dispatch(toggleFollowingProgress(false, userID))
+            if (data.resultCode === 0) {
+                dispatch(followSuccess(userID))
+            }
+        })
+}
+
+export const unFollow = (userID: number): AppThunk => dispatch => {
+    dispatch(toggleFollowingProgress(true, userID))
+    usersAPI.unFollowUser(userID)
+        .then((data: FollowDate) => {
+            dispatch(toggleFollowingProgress(false, userID))
+            if (data.resultCode === 0) {
+                dispatch(unFollowSuccess(userID))
+            }
+        })
 }

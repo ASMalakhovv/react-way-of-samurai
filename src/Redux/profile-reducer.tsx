@@ -1,4 +1,6 @@
 import {ContactsUsersProfile, PhotosUsersProfile, ProfileUser} from "../types/entities";
+import {AppThunk} from "./redux-store";
+import {profileAPI} from "../api/api";
 
 const ADD_NEW_POST = "ADD-NEW-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
@@ -65,7 +67,7 @@ const profileReducer = (state: ProfileStateType = initialState, action: ProfileA
         case UPDATE_NEW_POST_TEXT:
             return {...state, newPostText: action.changeValue};
         case SET_PROFILE_USER:
-            return {...state, profileUser:action.profileUser}
+            return {...state, profileUser: action.profileUser}
         default:
             return state;
     }
@@ -80,7 +82,6 @@ export const addNewPost = () => {
     } as const
 }
 export const updateNewPostText = (value: string) => {
-
     return {
         type: UPDATE_NEW_POST_TEXT,
         changeValue: value
@@ -92,4 +93,10 @@ export const setProfileUser = (profileUser: ProfileUser) => {
         type: SET_PROFILE_USER,
         profileUser
     } as const
+}
+
+export const getProfileUsers = (userID: string): AppThunk => async dispatch => {
+    let profileUsers:ProfileUser = await profileAPI.getProfile(userID)
+    dispatch(setProfileUser(profileUsers))
+
 }

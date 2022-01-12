@@ -1,5 +1,3 @@
-
-
 export type SideBarType = {
     title: Array<TitleBarType>
     additionally: string
@@ -16,7 +14,8 @@ let initialState = {
         {id: "/news", item: "News"},
         {id: "/music", item: "Music"},
         {id: "/settings", item: "Settings"},
-        {id: "/users", item: "Users"}
+        {id: "/users", item: "Users"},
+        {id: "/login", item: "Login"}
 
     ],
     additionally: "Friends"
@@ -29,7 +28,7 @@ const sidebarReducer = (state: SideBarType = initialState, action: SideBarAction
 export const sideBarAC = () => {
     return {
         type: "SIDE-BAR"
-    }as const
+    } as const
 }
 export type SideBarActionType = ReturnType<typeof sideBarAC>
 
