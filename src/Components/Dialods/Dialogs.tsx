@@ -4,9 +4,11 @@ import {DialogItem} from "./DialogItem/DialogItem";
 import {DialogMessage} from "./DialogMessage/DialogMessage";
 import {AddMessage} from "./AddMessage/AddMessage";
 import {DialogsPropsType} from "./DialogsContainer";
+import {Redirect} from "react-router-dom";
 
 
 export function Dialogs(props: DialogsPropsType) {
+    if (props.isAuth === false) return <Redirect to={'login'}/>;
 
     const dialogsElements = props.dialogs.map(d => <DialogItem name={d.name}
                                                                id={d.id}
