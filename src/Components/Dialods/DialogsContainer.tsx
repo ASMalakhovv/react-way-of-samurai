@@ -9,6 +9,7 @@ import {
 } from "../../Redux/dialogs-reducer";
 import {AppStateType} from "../../Redux/redux-store";
 import {Dialogs} from "./Dialogs";
+import {compose} from "redux";
 
 export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -45,4 +46,5 @@ export const mapDispatchToProps = (dispatch: (action: DialogsActionType) => void
 }
 
 
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Dialogs)

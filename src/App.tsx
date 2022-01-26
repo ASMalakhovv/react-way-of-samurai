@@ -1,13 +1,13 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import './App.css';
 import NavBar from "./Components/Navbar/Navbar";
 import {Music} from "./Components/Music/Music";
 import {News} from "./Components/News/News";
 import {Settings} from "./Components/Settings/Settings";
 import {Route} from "react-router-dom";
-import {DialogsContainer} from './Components/Dialods/DialogsContainer';
+import DialogsContainer from './Components/Dialods/DialogsContainer';
 import {UsersContainer} from './Components/Users/UsersContainer';
-import {ContainerProfile} from "./Components/Profile/ProfileContainer";
+import ContainerProfile from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import {Login} from "./Components/Login/Login";
 import {connect} from "react-redux";
@@ -52,4 +52,4 @@ function App(props: AppMstpType) {
 }
 
 
-export default compose(connect(mstp))(App)
+export default compose<ComponentType>(connect(mstp))(App)

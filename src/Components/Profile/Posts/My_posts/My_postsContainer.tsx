@@ -7,6 +7,8 @@ import {
 import {MyPosts} from "./My_posts";
 import {AppStateType} from "../../../../Redux/redux-store";
 import {connect} from "react-redux";
+import {compose} from "redux";
+import {ComponentType} from "react";
 
 export type MyPostPropsType = mapStateToPropsType & mapDispatchPropsType
 export type mapStateToPropsType = {
@@ -36,4 +38,4 @@ let mapDispatchProps = (dispatch: (action: ProfileActionType) => void): mapDispa
     }
 }
 
-export const MyPostsContainer = connect(mapStateToProps, mapDispatchProps)(MyPosts)
+export default compose<ComponentType>(connect(mapStateToProps, mapDispatchProps))(MyPosts)

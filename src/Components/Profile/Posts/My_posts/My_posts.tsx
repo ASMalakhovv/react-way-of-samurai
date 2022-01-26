@@ -1,12 +1,12 @@
 import React, {ChangeEvent} from "react";
 import s from './My_posts.module.css'
 import {Posts} from "../Post";
-import { MyPostPropsType } from "./My_postsContainer";
+import {MyPostPropsType} from "./My_postsContainer";
 
 
 export function MyPosts(props: MyPostPropsType) {
     const onClickPostHandler = () => {
-        if(props.newPostText.trim()) {
+        if (props.newPostText.trim()) {
             props.onClickPostHandler();
         }
     }
@@ -23,7 +23,7 @@ export function MyPosts(props: MyPostPropsType) {
                 <div>
                     <h3>My posts</h3>
                     <textarea value={props.newPostText}
-                              onChange={onChangeHandler}></textarea>
+                              onChange={onChangeHandler}/>
                 </div>
                 <div>
                     <button onClick={onClickPostHandler}>Add post</button>
