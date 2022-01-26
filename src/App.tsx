@@ -7,30 +7,49 @@ import {Settings} from "./Components/Settings/Settings";
 import {Route} from "react-router-dom";
 import {DialogsContainer} from './Components/Dialods/DialogsContainer';
 import {UsersContainer} from './Components/Users/UsersContainer';
-import ProfileContainer from "./Components/Profile/ProfileContainer";
+import {ContainerProfile} from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import {Login} from "./Components/Login/Login";
+import {connect} from "react-redux";
+import {AppStateType} from "./Redux/redux-store";
+import {Preloader} from "./Components/common/Preloader/Preloader";
+import {compose} from "redux";
 
 
+type AppMstpType = {
+    isInit: boolean
+    isAuth: boolean
+}
+const mstp = (state: AppStateType): AppMstpType => {
+    return {
+        isInit: state.auth.isInit,
+        isAuth: state.auth.isAuth
+    }
+}
 
-function App() {
+function App(props: AppMstpType) {
     return (
 
         <div className="app-wrapper">
             <HeaderContainer/>
-            <NavBar />
-            <div className="app-wrapper-content">
-                <Route path="/message" component={DialogsContainer}/>
-                <Route path="/profile/:userId" component={ProfileContainer}/>
-                <Route path="/users" render={() => <UsersContainer/>}/>
-                <Route path="/news" component={News}/>
-                <Route path="/music" component={Music}/>
-                <Route path="/settings" component={Settings}/>
-                <Route path="/login" component={Login}/>
-            </div>
+            <NavBar/>
+            {props.isInit ?
+                <div className="app-wrapper-content">
+                    <Route path="/message" component={DialogsContainer}/>
+                    <Route path="/profile" component={ContainerProfile}/>
+                    <Route path="/profile/:userId " component={ContainerProfile}/>
+                    <Route path="/users" render={() => <UsersContainer/>}/>
+                    <Route path="/news" component={News}/>
+                    <Route path="/music" component={Music}/>
+                    <Route path="/settings" component={Settings}/>
+                    <Route path="/login" component={Login}/>
+                </div>
+                : <Preloader/>
+            }
         </div>
 
     );
 }
 
-export default App;
+
+export default compose(connect(mstp))(App)

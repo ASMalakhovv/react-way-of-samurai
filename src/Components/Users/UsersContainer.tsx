@@ -10,6 +10,7 @@ import {UsersItemType} from "../../types/entities"
 import React from "react";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 export type MapStateToProps = {
@@ -78,8 +79,8 @@ export type MapDispatchToPropsType = {
     getUsers: (currentPage: number, pageSize: number) => void
 }
 
-export const UsersContainer = connect<MapStateToProps, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
+export const UsersContainer = withAuthRedirect(connect<MapStateToProps, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
     {
         follow, unFollow, setUsers,
         setCurrentPage, getUsers
-    })(UsersContainerComponent)
+    })(UsersContainerComponent))

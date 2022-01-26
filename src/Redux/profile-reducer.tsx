@@ -1,4 +1,4 @@
-import {ContactsUsersProfile, PhotosUsersProfile, ProfileUser} from "../types/entities";
+import {ProfileUser} from "../types/entities";
 import {AppThunk} from "./redux-store";
 import {profileAPI} from "../api/api";
 
@@ -33,7 +33,7 @@ let initialState: ProfileStateType = {
     ],
     addressImage: "https://assets.bellator.com/andrey_koreshkov_1990/08/23_banner/original-1619507089.jpg",
     profileUser: {
-        aboutMe: "",
+        aboutMe: "wdadwa",
         contacts: {
             facebook: "",
             website: "",
@@ -47,7 +47,7 @@ let initialState: ProfileStateType = {
         lookingForAJob: false,
         lookingForAJobDescription: "",
         fullName: "",
-        userId: 1,
+        userId: 17050,
         photos: {
             small: "",
             large: ""

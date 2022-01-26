@@ -26,7 +26,7 @@ type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
-        this.props.getProfileUsers(userId)
+        userId ? getProfileUsers(userId) : getProfileUsers(String(this.props.profileUser.userId))
     }
 
     render() {
@@ -48,5 +48,5 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 
 const WithUrlDataContainerComponent = withRouter(ProfileContainer)
-export default withAuthRedirect(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
+export const ContainerProfile = withAuthRedirect(connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
     {getProfileUsers})(WithUrlDataContainerComponent))
