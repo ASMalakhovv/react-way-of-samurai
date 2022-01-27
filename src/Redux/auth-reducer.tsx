@@ -1,6 +1,6 @@
 import {AuthMe, AuthMeData} from "../types/entities";
 import {AppThunk} from "./redux-store";
-import {headerAPI} from "../api/api";
+import {authAPI} from "../api/api";
 
 
 export enum AUTH_ME {
@@ -66,7 +66,7 @@ export const initStatus = (isInit: boolean) => {
 export const authSetUser = (): AppThunk => async dispatch => {
     try {
         dispatch(initStatus(false))
-        let data: AuthMe = await headerAPI.getAuthMe()
+        let data: AuthMe = await authAPI.getAuthMe()
         let {id, email, login} = data.data
         if (data.resultCode === 0) {
             if (id && email && login) {

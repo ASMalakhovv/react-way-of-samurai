@@ -6,7 +6,7 @@ import {News} from "./Components/News/News";
 import {Settings} from "./Components/Settings/Settings";
 import {Route} from "react-router-dom";
 import DialogsContainer from './Components/Dialods/DialogsContainer';
-import {UsersContainer} from './Components/Users/UsersContainer';
+import UsersContainer from './Components/Users/UsersContainer';
 import ContainerProfile from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import {Login} from "./Components/Login/Login";
@@ -33,8 +33,9 @@ function App(props: AppMstpType) {
         <div className="app-wrapper">
             <HeaderContainer/>
             <NavBar/>
-            {props.isInit ?
-                <div className="app-wrapper-content">
+            {!props.isInit
+                ? <Preloader/>
+                : <div className="app-wrapper-content">
                     <Route path="/message" component={DialogsContainer}/>
                     <Route path="/profile" component={ContainerProfile}/>
                     <Route path="/profile/:userId " component={ContainerProfile}/>
@@ -44,7 +45,6 @@ function App(props: AppMstpType) {
                     <Route path="/settings" component={Settings}/>
                     <Route path="/login" component={Login}/>
                 </div>
-                : <Preloader/>
             }
         </div>
 

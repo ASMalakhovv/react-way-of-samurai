@@ -30,7 +30,7 @@ export const usersAPI = {
     },
 }
 
-export const headerAPI = {
+export const authAPI = {
     getAuthMe() {
         return instance.get(`auth/me`)
             .then((response: AxiosResponse<AuthMe>) => {

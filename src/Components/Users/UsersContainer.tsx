@@ -7,10 +7,11 @@ import {
     setUsers, unFollow,
 } from "../../Redux/users-reducer"
 import {UsersItemType} from "../../types/entities"
-import React from "react";
+import React, {ComponentType} from "react";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 
 export type MapStateToProps = {
@@ -79,8 +80,15 @@ export type MapDispatchToPropsType = {
     getUsers: (currentPage: number, pageSize: number) => void
 }
 
-export const UsersContainer = withAuthRedirect(connect<MapStateToProps, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
-    {
-        follow, unFollow, setUsers,
-        setCurrentPage, getUsers
-    })(UsersContainerComponent))
+
+export default compose<ComponentType>
+(
+    withAuthRedirect,
+    connect<MapStateToProps, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
+        follow,
+        unFollow,
+        setUsers,
+        setCurrentPage,
+        getUsers
+    })
+)(UsersContainerComponent)
