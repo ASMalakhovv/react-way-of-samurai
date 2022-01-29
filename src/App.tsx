@@ -37,8 +37,8 @@ function App(props: AppMstpType) {
                 ? <Preloader/>
                 : <div className="app-wrapper-content">
                     <Route path="/message" component={DialogsContainer}/>
-                    <Route path="/profile" component={ContainerProfile}/>
-                    <Route path="/profile/:userId " component={ContainerProfile}/>
+                    <Route exact path="/profile" component={ContainerProfile}/>
+                    <Route path="/profile/:userId" component={ContainerProfile}/>
                     <Route path="/users" render={() => <UsersContainer/>}/>
                     <Route path="/news" component={News}/>
                     <Route path="/music" component={Music}/>

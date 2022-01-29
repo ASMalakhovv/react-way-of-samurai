@@ -1,20 +1,23 @@
 import React, {ComponentType} from "react";
 import Profile from "./Profile";
-import {ProfileUser} from "../../types/entities";
 import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {getProfileUsers} from "../../Redux/profile-reducer";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {getProfileUsers, getStatus, setStatus} from "../../Redux/profile-reducer";
+import {ProfileUser} from "../../types/entities";
 
 
 type MapDispatchToPropsType = {
     getProfileUsers: (userID: string) => void
+    getStatus: (userId: string) => void
+    setStatus: (status: string) => void
 }
 type MapStateToPropsType = {
     addressImage: string
     profileUser: ProfileUser
+    status: string
 }
 type PathParamsType = {
     userId: string
@@ -27,13 +30,21 @@ type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
-        userId ? getProfileUsers(userId) : getProfileUsers(String(this.props.profileUser.userId))
+        if (!userId) {
+            userId = String(this.props.profileUser.userId)
+        }
+        this.props.getProfileUsers(userId)
+        this.props.getStatus(userId)
     }
 
     render() {
         return (
             <div>
-                <Profile profileUsers={this.props.profileUser}/>
+                <Profile
+                    profileUsers={this.props.profileUser}
+                    status={this.props.status}
+                    updateStatus={this.props.setStatus}
+                />
             </div>
         )
     }
@@ -41,17 +52,23 @@ class ProfileContainer extends React.Component<PropsType> {
 
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
-    return {
-        addressImage: state.profilePage.addressImage,
-        profileUser: state.profilePage.profileUser
+        return {
+            addressImage: state.profilePage.addressImage,
+            profileUser: state.profilePage.profileUser,
+            status: state.profilePage.status,
+        }
     }
-}
 
 
 export default compose<ComponentType>
 (
     withAuthRedirect,
-    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {getProfileUsers}),
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>
+    (mapStateToProps, {
+        getProfileUsers,
+        getStatus,
+        setStatus,
+    }),
     withRouter
 )
 (ProfileContainer)

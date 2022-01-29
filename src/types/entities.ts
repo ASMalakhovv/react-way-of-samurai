@@ -41,6 +41,12 @@ export type ProfileUser = {
     photos: PhotosUsersProfile
 }
 
+export type ProfileStatus = {
+    resultCode: number
+    messages: string[]
+    data: {}
+}
+
 
 export type AuthMe = {
     resultCode: number

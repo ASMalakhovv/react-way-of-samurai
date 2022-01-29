@@ -5,13 +5,18 @@ import {ProfileUser} from "../../types/entities";
 
 export type ProfilePropsType = {
     profileUsers: ProfileUser
+    status:string
+    updateStatus: (status:string) => void
 }
 
 function Profile(props: ProfilePropsType) {
 
     return (
         <div>
-            <ProfileInfo profileUser={props.profileUsers}/>
+            <ProfileInfo profileUser={props.profileUsers}
+                         updateStatus={props.updateStatus}
+                         status={props.status}
+            />
             <MyPostsContainer/>
 
         </div>

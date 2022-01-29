@@ -5,10 +5,13 @@ import {profileAPI} from "../api/api";
 const ADD_NEW_POST = "ADD-NEW-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_PROFILE_USER = "SET-PROFILE-USER"
+const SET_PROFILE_STATUS = "SET-PROFILE-STATUS"
+
 export type ProfileActionType =
     ReturnType<typeof addNewPost>
     | ReturnType<typeof updateNewPostText>
-    | ReturnType<typeof setProfileUser>;
+    | ReturnType<typeof setProfileUser>
+    | ReturnType<typeof setProfileStatus>;
 
 
 export type ProfileStateType = {
@@ -16,6 +19,7 @@ export type ProfileStateType = {
     posts: PostsType
     addressImage: string
     profileUser: ProfileUser
+    status: string
 }
 export type PostsType = Array<PostsTypeObject>
 export type PostsTypeObject = {
@@ -47,12 +51,13 @@ let initialState: ProfileStateType = {
         lookingForAJob: false,
         lookingForAJobDescription: "",
         fullName: "",
-        userId: 17050,
+        userId: 20345,
         photos: {
             small: "",
             large: ""
         },
     },
+    status: "",
 }
 
 const profileReducer = (state: ProfileStateType = initialState, action: ProfileActionType): ProfileStateType => {
@@ -67,7 +72,9 @@ const profileReducer = (state: ProfileStateType = initialState, action: ProfileA
         case UPDATE_NEW_POST_TEXT:
             return {...state, newPostText: action.changeValue};
         case SET_PROFILE_USER:
-            return {...state, profileUser: action.profileUser}
+            return {...state, profileUser: action.profileUser};
+        case SET_PROFILE_STATUS:
+            return {...state, status: action.status};
         default:
             return state;
     }
@@ -75,8 +82,9 @@ const profileReducer = (state: ProfileStateType = initialState, action: ProfileA
 
 export default profileReducer;
 
-export const addNewPost = () => {
 
+//AC
+export const addNewPost = () => {
     return {
         type: ADD_NEW_POST
     } as const
@@ -95,8 +103,36 @@ export const setProfileUser = (profileUser: ProfileUser) => {
     } as const
 }
 
-export const getProfileUsers = (userID: string): AppThunk => async dispatch => {
-    let profileUsers:ProfileUser = await profileAPI.getProfile(userID)
-    dispatch(setProfileUser(profileUsers))
+export const setProfileStatus = (status: string) => {
+    return {
+        type: SET_PROFILE_STATUS,
+        status
+    } as const
+}
 
+
+//THUNK
+export const getProfileUsers = (userID: string): AppThunk => async dispatch => {
+    let profileUsers: ProfileUser = await profileAPI.getProfile(userID)
+    dispatch(setProfileUser(profileUsers))
+}
+
+export const getStatus = (userId: string): AppThunk => async dispatch => {
+    try {
+        let status: string = await profileAPI.getStatus(userId)
+        dispatch(setProfileStatus(status))
+    } catch (e) {
+        alert('Не могу запросить ваш статус')
+    }
+}
+
+export const setStatus = (status: string): AppThunk => async dispatch => {
+    try {
+        let res: number = await profileAPI.updateStatus(status)
+        if (res === 0) {
+            dispatch(setProfileStatus(status))
+        }
+    } catch (e) {
+        alert('Не могу установить статус')
+    }
 }

@@ -1,5 +1,5 @@
-import axios, {AxiosResponse} from "axios";
-import {AuthMe, FollowDate, ProfileUser, UsersStateType} from "../types/entities";
+import axios, {Axios, AxiosResponse} from "axios";
+import {AuthMe, FollowDate, ProfileStatus, ProfileUser, UsersStateType} from "../types/entities";
 
 const instance = axios.create({
     withCredentials: true,
@@ -40,10 +40,22 @@ export const authAPI = {
 }
 
 export const profileAPI = {
-    getProfile(userId:string) {
+    getProfile(userId: string) {
         return instance.get(`profile/${userId}`)
             .then((response: AxiosResponse<ProfileUser>) => {
                 return response.data
+            })
+    },
+    getStatus(userId: string) {
+        return instance.get(`profile/status/${userId}`)
+            .then((response: AxiosResponse<string>) => {
+                return response.data
+            })
+    },
+    updateStatus(status: string) {
+        return instance.put(`profile/status`, {status})
+            .then((res: AxiosResponse<ProfileStatus>) => {
+                return res.data.resultCode
             })
     }
 }
