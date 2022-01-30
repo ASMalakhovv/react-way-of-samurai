@@ -1,5 +1,5 @@
 import axios, {Axios, AxiosResponse} from "axios";
-import {AuthMe, FollowDate, ProfileStatus, ProfileUser, UsersStateType} from "../types/entities";
+import {AuthMe, FollowDate, LoginApp, ProfileStatus, ProfileUser, UsersStateType} from "../types/entities";
 
 const instance = axios.create({
     withCredentials: true,
@@ -35,6 +35,12 @@ export const authAPI = {
         return instance.get(`auth/me`)
             .then((response: AxiosResponse<AuthMe>) => {
                 return response.data
+            })
+    },
+    postLogin(email: string, password: string) {
+        return instance.post(`auth/login`, {email, password})
+            .then((res: AxiosResponse<LoginApp>) => {
+                return  res.data.resultCode
             })
     }
 }

@@ -2,13 +2,19 @@ import React from "react";
 import s from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {DialogMessage} from "./DialogMessage/DialogMessage";
-import {AddMessage} from "./AddMessage/AddMessage";
+import {AddMessageData, AddMessageReduxForm} from "./AddMessage/AddMessage";
 import {DialogsPropsType} from "./DialogsContainer";
-import {Redirect} from "react-router-dom";
 
 
 export function Dialogs(props: DialogsPropsType) {
-    if (!props.isAuth) return <Redirect to={'login'}/>;
+
+    const onSubmit = (data: AddMessageData) => {
+        if (data.addMessage && data.addMessage.trim()) {
+            props.addNewMessage(data.addMessage);
+        } else {
+            alert('Введите корректные данные')
+        }
+    }
 
     const dialogsElements = props.dialogs.map(d => <DialogItem name={d.name}
                                                                id={d.id}
@@ -26,10 +32,7 @@ export function Dialogs(props: DialogsPropsType) {
                 {messagesElements}
             </div>
             <div className={s.addMessage}>
-                <AddMessage
-                    onChangeTextAreaMessage={props.onChangeTextAreaMessage}
-                    onClickButtonHandler={props.onClickButtonHandler}
-                    newMessageBody={props.newMessageBody}/>
+                <AddMessageReduxForm onSubmit={onSubmit}/>
             </div>
         </div>
     )

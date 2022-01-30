@@ -1,28 +1,20 @@
-import React, {ChangeEvent} from "react";
-import s from './AddMessage.module.css'
-import {ActionType} from "../../../Redux/Store";
-import {addNewMessageActionCreator, updateNewMessageBodyActionCreate} from "../../../Redux/dialogs-reducer";
+import React from "react";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
-type AddMessagePropsType = {
-    newMessageBody: string
-    onChangeTextAreaMessage: (text: string) => void
-    onClickButtonHandler: () => void
+
+export type AddMessageData = {
+    addMessage: string
 }
 
-export function AddMessage(props: AddMessagePropsType) {
-
-    const onChangeTextAreaMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let newValue = e.currentTarget.value
-        props.onChangeTextAreaMessage(newValue)
-    }
-    const onClickButtonHandler = () => {
-        if (props.newMessageBody.trim()) {
-            props.onClickButtonHandler()
-        }
-    }
-    return (<div className={s.addMessage}>
-            <textarea value={props.newMessageBody} onChange={onChangeTextAreaMessage}/>
-            <button onClick={onClickButtonHandler}>go</button>
-        </div>
+function AddMessageForm(props: InjectedFormProps<AddMessageData>) {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field component="textarea" name="addMessage" placeholder={"Add message..."}/>
+            </div>
+            <button>AddMessage</button>
+        </form>
     )
 }
+
+export const AddMessageReduxForm = reduxForm<AddMessageData>({form: 'addMessage'})(AddMessageForm)

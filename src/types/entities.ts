@@ -66,3 +66,11 @@ export type FollowDate = {
     messages: string[],
     data: {}
 }
+
+export type LoginApp = {
+    resultCode: number
+    messages: []
+    data: {
+        userId: number
+    }
+}

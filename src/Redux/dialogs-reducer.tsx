@@ -1,8 +1,7 @@
 const ADD_NEW_MESSAGE = "ADD-NEW-MESSAGE";
-const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY"
+
 export type DialogsActionType =
-    | ReturnType<typeof addNewMessageActionCreator>
-    | ReturnType<typeof updateNewMessageBodyActionCreate>;
+    | ReturnType<typeof addNewMessage>;
 
 export type DialogsStateType = typeof initialState
 export type DialogItemType = {
@@ -63,37 +62,27 @@ let initialState = {
         {id: 6, message: "YO"},
         {id: 7, message: "YO"},
     ] as Array<MessageItemType>,
-    newMessageBody: ""
 }
 
 const dialogsReducer = (state: DialogsStateType = initialState, action: DialogsActionType): DialogsStateType => {
-    let newState: DialogsStateType;
     switch (action.type) {
         case ADD_NEW_MESSAGE:
             let numberOfMessages = state.messages.length;
-            let body = state.newMessageBody
             return {
                 ...state,
-                messages: [...state.messages, {id: numberOfMessages + 1, message: body}],
-                newMessageBody: ""
+                messages: [...state.messages, {id: numberOfMessages + 1, message: action.message}],
             }
-        case UPDATE_NEW_MESSAGE_BODY:
-            return {...state, newMessageBody: action.valueMessageBody};
         default:
             return state;
     }
 };
-export const addNewMessageActionCreator = () => {
+export const addNewMessage = (message:string) => {
     return {
         type: ADD_NEW_MESSAGE,
+        message
     } as const;
 };
 
-export const updateNewMessageBodyActionCreate = (valueMessageBody: string) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_BODY,
-        valueMessageBody: valueMessageBody
-    } as const;
-};
+
 
 export default dialogsReducer;

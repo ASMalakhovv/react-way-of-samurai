@@ -6,6 +6,7 @@ import {UsersActionType, usersReducer} from "./users-reducer";
 import authReducer, {AuthActionType} from "./auth-reducer";
 import {ThunkAction} from 'redux-thunk'
 import thunkMiddleware from 'redux-thunk'
+import { reducer as formReducer } from 'redux-form'
 
 export type AppStateType = ReturnType<typeof rootReducer>
 const rootReducer = combineReducers({
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     profilePage: profileReducer,
     sidebar: sidebarReducer,
     usersPage: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 });
 
 
