@@ -3,6 +3,8 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/redux-store";
 import {loginApplication} from "../../Redux/auth-reducer";
 import {Redirect} from "react-router-dom";
+import {Input} from "../common/FormsControls/FormControls";
+import {required} from "../../utilits/validators/validators";
 
 
 export type LoginData = {
@@ -32,13 +34,13 @@ export function LoginForm(props: InjectedFormProps<LoginData>) {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component="input" name="login" placeholder={"login"}/>
+                <Field component={Input} name="login" placeholder={"login"} validate={required}/>
             </div>
             <div>
-                <Field component="input" name="password" placeholder={"password"}/>
+                <Field component={Input} name="password" placeholder={"password"} validate={required}/>
             </div>
             <div>
-                <Field component="input" name="rememberMe" type={"checkbox"}/> remember me
+                <Field component={Input} name="rememberMe" type={"checkbox"}/> remember me
             </div>
             <button>Login</button>
         </form>
