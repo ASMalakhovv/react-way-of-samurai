@@ -67,10 +67,9 @@ export type FollowDate = {
     data: {}
 }
 
-export type LoginApp = {
+export type CommonLoginType<T = {}> = {
     resultCode: number
-    messages: []
-    data: {
-        userId: number
-    }
+    fieldsErrors: []
+    messages: string[]
+    data: T
 }

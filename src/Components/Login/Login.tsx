@@ -1,10 +1,11 @@
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/redux-store";
-import {loginApplication} from "../../Redux/auth-reducer";
-import {Redirect} from "react-router-dom";
+import {login} from "../../Redux/auth-reducer";
 import {Input} from "../common/FormsControls/FormControls";
 import {required} from "../../utilits/validators/validators";
+import {Redirect} from "react-router-dom";
+import style from '../common/FormsControls/FormControl.module.css'
 
 
 export type LoginData = {
@@ -15,17 +16,22 @@ export type LoginData = {
 
 
 function Login(props: ConnectType) {
+    debugger
     const onSubmit = (data: LoginData) => {
         const {login, password} = data
-        props.loginApplication(login, password)
+        props.login(login, password)
     }
+
+    if (props.isLogin && props.isAuth) {
+        return <Redirect to='/profile'/>
+    }
+
+
     return (
-        !props.isLogin
-            ? <div>
-                <h1>Login</h1>
-                <LoginReduxForm onSubmit={onSubmit}/>
-            </div>
-            : <Redirect to={"/profile"}/>
+        <div>
+            <h1>Login</h1>
+            <LoginReduxForm onSubmit={onSubmit}/>
+        </div>
     )
 }
 
@@ -39,6 +45,9 @@ export function LoginForm(props: InjectedFormProps<LoginData>) {
             <div>
                 <Field component={Input} name="password" placeholder={"password"} validate={required}/>
             </div>
+            {props.error && <div className={style.formCommonError}>
+                {props.error}
+            </div>}
             <div>
                 <Field component={Input} name="rememberMe" type={"checkbox"}/> remember me
             </div>
@@ -51,9 +60,10 @@ const LoginReduxForm = reduxForm<LoginData>({form: 'login'})(LoginForm)
 
 type MstpType = {
     isLogin: boolean
+    isAuth: boolean
 }
 type MdtpType = {
-    loginApplication: (email: string, password: string) => void
+    login: (email: string, password: string) => void
 }
 
 type ConnectType = MstpType & MdtpType
@@ -61,9 +71,10 @@ type ConnectType = MstpType & MdtpType
 
 const mstp = (state: AppStateType): MstpType => {
     return {
-        isLogin: state.auth.isLogin
+        isLogin: state.auth.isLogin,
+        isAuth: state.auth.isAuth
     }
 }
 
 export default connect<MstpType, MdtpType, {}, AppStateType>(
-    mstp, {loginApplication})(Login)
+    mstp, {login})(Login)

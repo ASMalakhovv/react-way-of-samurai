@@ -1,5 +1,12 @@
-import axios, {Axios, AxiosResponse} from "axios";
-import {AuthMe, FollowDate, LoginApp, ProfileStatus, ProfileUser, UsersStateType} from "../types/entities";
+import axios, {AxiosResponse} from "axios";
+import {
+    AuthMe,
+    CommonLoginType,
+    FollowDate,
+    ProfileStatus,
+    ProfileUser,
+    UsersStateType
+} from "../types/entities";
 
 const instance = axios.create({
     withCredentials: true,
@@ -37,10 +44,17 @@ export const authAPI = {
                 return response.data
             })
     },
-    postLogin(email: string, password: string) {
-        return instance.post(`auth/login`, {email, password})
-            .then((res: AxiosResponse<LoginApp>) => {
-                return  res.data.resultCode
+    login(email: string, password: string) {
+        return instance.post<CommonLoginType<{ userId: number }>, AxiosResponse<CommonLoginType<{ userId: number }>>, { email: string, password: string }>
+        (`auth/login`, {email, password})
+            .then(res => {
+                return res.data
+            })
+    },
+    logout() {
+        return instance.delete<CommonLoginType>(`auth/login`)
+            .then(res => {
+                return res.data.resultCode
             })
     }
 }

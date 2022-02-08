@@ -18,6 +18,8 @@ type MapStateToPropsType = {
     addressImage: string
     profileUser: ProfileUser
     status: string
+    isInit: boolean
+    authorizedId: number | null
 }
 type PathParamsType = {
     userId: string
@@ -31,7 +33,7 @@ class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = String(this.props.profileUser.userId)
+            userId = String(this.props.authorizedId)
         }
         this.props.getProfileUsers(userId)
         this.props.getStatus(userId)
@@ -45,19 +47,23 @@ class ProfileContainer extends React.Component<PropsType> {
                     status={this.props.status}
                     updateStatus={this.props.setStatus}
                 />
+
             </div>
+
         )
     }
 }
 
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
-        return {
-            addressImage: state.profilePage.addressImage,
-            profileUser: state.profilePage.profileUser,
-            status: state.profilePage.status,
-        }
+    return {
+        addressImage: state.profilePage.addressImage,
+        profileUser: state.profilePage.profileUser,
+        status: state.profilePage.status,
+        isInit: state.auth.isInit,
+        authorizedId: state.auth.id
     }
+}
 
 
 export default compose<ComponentType>

@@ -16,11 +16,8 @@ export function Dialogs(props: DialogsPropsType) {
         }
     }
 
-    const dialogsElements = props.dialogs.map(d => <DialogItem name={d.name}
-                                                               id={d.id}
-                                                               img={d.img}/>)
-    const messagesElements = props.messages.map(m => <DialogMessage id={m.id}
-                                                                    message={m.message}/>)
+    const dialogsElements = props.dialogs.map(d => <DialogItem name={d.name} id={d.id} img={d.img}/>)
+    const messagesElements = props.messages.map(m => <DialogMessage id={m.id} message={m.message}/>)
 
 
     return (
