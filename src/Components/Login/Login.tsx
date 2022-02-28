@@ -16,7 +16,6 @@ export type LoginData = {
 
 
 function Login(props: ConnectType) {
-    debugger
     const onSubmit = (data: LoginData) => {
         const {login, password} = data
         props.login(login, password)

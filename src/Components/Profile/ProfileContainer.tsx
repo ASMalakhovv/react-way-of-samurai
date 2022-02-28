@@ -18,7 +18,6 @@ type MapStateToPropsType = {
     addressImage: string
     profileUser: ProfileUser
     status: string
-    isInit: boolean
     authorizedId: number | null
 }
 type PathParamsType = {
@@ -60,7 +59,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         addressImage: state.profilePage.addressImage,
         profileUser: state.profilePage.profileUser,
         status: state.profilePage.status,
-        isInit: state.auth.isInit,
         authorizedId: state.auth.id
     }
 }

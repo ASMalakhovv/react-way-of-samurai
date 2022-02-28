@@ -1,4 +1,5 @@
 import {AppThunk} from "./redux-store";
+import {authSetUser} from "./auth-reducer";
 
 
 export enum APP {
@@ -18,9 +19,10 @@ let initialState: AppInitialStateType = {
 }
 
 
-const appReducer = (state: AppInitialStateType = initialState, action: AppActionType): AppInitialStateType => {
+export const appReducer = (state: AppInitialStateType = initialState, action: AppActionType): AppInitialStateType => {
     switch (action.type) {
         case APP.INITIALIZEDSUCCESS:
+            debugger
             return {
                 ...state,
                 initialized: true
@@ -40,12 +42,13 @@ export const initializedSuccess = () => {
 
 
 //THUNK
-export const initializedApp = (): AppThunk => async dispatch => {
+export const initializedApp = (): AppThunk<void> => dispatch => {
     try {
-
+        let promise = dispatch(authSetUser())
+        promise.then(()=> dispatch(initializedSuccess()))
 
     } catch (e) {
-        alert('не могу authSetUser')
+        alert('не могу initializedApp')
     }
 }
 

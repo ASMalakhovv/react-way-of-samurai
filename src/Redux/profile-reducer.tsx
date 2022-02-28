@@ -111,12 +111,12 @@ export const setProfileStatus = (status: string) => {
 
 
 //THUNK
-export const getProfileUsers = (userID: string): AppThunk => async dispatch => {
+export const getProfileUsers = (userID: string): AppThunk<void> => async dispatch => {
     let profileUsers: ProfileUser = await profileAPI.getProfile(userID)
     dispatch(setProfileUser(profileUsers))
 }
 
-export const getStatus = (userId: string): AppThunk => async dispatch => {
+export const getStatus = (userId: string): AppThunk<void> => async dispatch => {
     try {
         let status: string = await profileAPI.getStatus(userId)
         dispatch(setProfileStatus(status))
@@ -125,7 +125,7 @@ export const getStatus = (userId: string): AppThunk => async dispatch => {
     }
 }
 
-export const setStatus = (status: string): AppThunk => async dispatch => {
+export const setStatus = (status: string): AppThunk<void> => async dispatch => {
     try {
         let res: number = await profileAPI.updateStatus(status)
         if (res === 0) {

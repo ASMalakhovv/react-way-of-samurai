@@ -12,6 +12,15 @@ import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getArrUserForButtonS,
+    getCurrentPageS,
+    getIsFetchingS,
+    getPageSizeS,
+    getReceivedForButtonS,
+    getTotalCountS,
+    getUsersS
+} from "../../Redux/users-selector";
 
 
 export type MapStateToProps = {
@@ -58,13 +67,13 @@ class UsersContainerComponent extends React.Component<UsersPropsType> {
 
 function mapStateToProps(state: AppStateType): MapStateToProps {
     return {
-        users: state.usersPage.items,
-        pageSize: state.usersPage.pageSize,
-        totalCount: state.usersPage.totalCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        receivedForButton: state.usersPage.receivedForButton,
-        arrUserForButton: state.usersPage.arrUserForButton
+        users: getUsersS(state),
+        pageSize: getPageSizeS(state),
+        totalCount: getTotalCountS(state),
+        currentPage: getCurrentPageS(state),
+        isFetching: getIsFetchingS(state),
+        receivedForButton: getReceivedForButtonS(state),
+        arrUserForButton: getArrUserForButtonS(state)
     }
 }
 

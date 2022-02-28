@@ -6,18 +6,16 @@ import {stopSubmit} from "redux-form";
 
 export enum AUTH_ME {
     SETUSER = "SET-USER-AUTH",
-    INITSTATUS = "INIT-STATUS",
     LOGINAPPLICATION = "LOGIN-APPLICATION"
 }
 
 
-export type AuthActionType = ReturnType<typeof setUser> | ReturnType<typeof initStatus> | ReturnType<typeof loginApp>;
+export type AuthActionType = ReturnType<typeof setUser> | ReturnType<typeof loginApp>;
 
 type AuthInitialState = typeof initialState
 
 type InitialStateType = {
     isAuth: boolean
-    isInit: boolean
     isLogin: boolean
 }
 
@@ -26,7 +24,6 @@ let initialState: AuthMeData & InitialStateType = {
     email: null,
     login: null,
     isAuth: false,
-    isInit: false,
     isLogin: false
 }
 
@@ -38,11 +35,6 @@ const authReducer = (state: AuthInitialState = initialState, action: AuthActionT
                 ...state,
                 ...action.payload,
                 isAuth: action.isAuth
-            };
-        case AUTH_ME.INITSTATUS:
-            return {
-                ...state,
-                isInit: action.isInit
             };
         case AUTH_ME.LOGINAPPLICATION:
             return {
@@ -69,13 +61,6 @@ export const setUser = (id: number | null, email: string | null, login: string |
 };
 
 
-export const initStatus = (isInit: boolean) => {
-    return {
-        type: AUTH_ME.INITSTATUS,
-        isInit
-    } as const
-}
-
 export const loginApp = (isLogin: boolean) => {
     return {
         type: AUTH_ME.LOGINAPPLICATION,
@@ -85,25 +70,20 @@ export const loginApp = (isLogin: boolean) => {
 
 
 //THUNK
-export const authSetUser = (): AppThunk => async dispatch => {
-    try {
-        dispatch(initStatus(false))
-        let data: AuthMe = await authAPI.getAuthMe()
-        let {id, email, login} = data.data
-        if (data.resultCode === 0) {
-            if (id && email && login) {
-                dispatch(setUser(id, email, login, true))
-                dispatch(loginApp(true))
+export const authSetUser = (): AppThunk<Promise<any>> => dispatch => {
+    return authAPI.getAuthMe()
+        .then(res => {
+            let {id, email, login} = res.data
+            if (res.resultCode === 0) {
+                if (id && email && login) {
+                    dispatch(setUser(id, email, login, true))
+                    dispatch(loginApp(true))
+                }
             }
-
-        }
-        dispatch(initStatus(true))
-    } catch (e) {
-        alert('не могу authSetUser')
-    }
+        })
 }
 
-export const login = (email: string, password: string): AppThunk => async dispatch => {
+export const login = (email: string, password: string): AppThunk<void> => async dispatch => {
     try {
         let res: CommonLoginType<{ userId: number }> = await authAPI.login(email, password)
         if (res.resultCode === 0) {
@@ -118,7 +98,7 @@ export const login = (email: string, password: string): AppThunk => async dispat
     }
 }
 
-export const logout = (): AppThunk => async dispatch => {
+export const logout = (): AppThunk<void> => async dispatch => {
     try {
         let res: number = await authAPI.logout()
         if (res === 0) {

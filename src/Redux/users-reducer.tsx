@@ -120,7 +120,7 @@ export const toggleFollowingProgress = (receivedForButton: boolean, userID: numb
     } as const
 }
 
-export const getUsers = (currentPage: number, pageSize: number): AppThunk => async dispatch => {
+export const getUsers = (currentPage: number, pageSize: number): AppThunk<void> => async dispatch => {
     try {
         dispatch(toggleIsFetching(true))
         let res = await usersAPI.getUsers(currentPage, pageSize)
@@ -134,7 +134,7 @@ export const getUsers = (currentPage: number, pageSize: number): AppThunk => asy
 }
 
 
-export const follow = (userID: number): AppThunk => dispatch => {
+export const follow = (userID: number): AppThunk<void> => dispatch => {
     dispatch(toggleFollowingProgress(true, userID))
     usersAPI.followUser(userID)
         .then((data: FollowDate) => {
@@ -145,7 +145,7 @@ export const follow = (userID: number): AppThunk => dispatch => {
         })
 }
 
-export const unFollow = (userID: number): AppThunk => dispatch => {
+export const unFollow = (userID: number): AppThunk<void> => dispatch => {
     dispatch(toggleFollowingProgress(true, userID))
     usersAPI.unFollowUser(userID)
         .then((data: FollowDate) => {

@@ -12,24 +12,24 @@ import HeaderContainer from "./Components/Header/HeaderContainer";
 import Login from "./Components/Login/Login";
 import {connect} from "react-redux";
 import {AppStateType} from "./Redux/redux-store";
-import {Preloader} from "./Components/common/Preloader/Preloader";
 import {compose} from "redux";
-import {authSetUser} from "./Redux/auth-reducer";
+import {initializedApp} from "./Redux/app-reducer";
+import {Preloader} from "./Components/common/Preloader/Preloader";
 
 
 type AppMstpType = {
-    isInit: boolean
     isAuth: boolean
+    initialized: boolean
 }
 
 type AppMdtpType = {
-    authSetUser: () => void
+    initializedApp: () => void
 }
 
 const mstp = (state: AppStateType): AppMstpType => {
     return {
-        isInit: state.auth.isInit,
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        initialized: state.app.initialized
     }
 }
 
@@ -37,28 +37,29 @@ const mstp = (state: AppStateType): AppMstpType => {
 class App extends React.Component<AppMstpType & AppMdtpType> {
 
     componentDidMount() {
-        this.props.authSetUser()
+        this.props.initializedApp()
     }
 
     render() {
+        if (!this.props.initialized) {
+            return <Preloader/>
+        }
         return (
 
             <div className="app-wrapper">
                 <HeaderContainer/>
                 <NavBar/>
-                {!this.props.isInit
-                    ? <Preloader/>
-                    : <div className="app-wrapper-content">
-                        <Route path="/message" component={DialogsContainer}/>
-                        <Route exact path="/profile" component={ContainerProfile}/>
-                        <Route path="/profile/:userId" component={ContainerProfile}/>
-                        <Route path="/users" render={() => <UsersContainer/>}/>
-                        <Route path="/news" component={News}/>
-                        <Route path="/music" component={Music}/>
-                        <Route path="/settings" component={Settings}/>
-                        <Route path="/login" component={Login}/>
-                    </div>
-                }
+                <div className="app-wrapper-content">
+                    <Route path="/message" component={DialogsContainer}/>
+                    <Route exact path="/profile" component={ContainerProfile}/>
+                    <Route path="/profile/:userId" component={ContainerProfile}/>
+                    <Route path="/users" render={() => <UsersContainer/>}/>
+                    <Route path="/news" component={News}/>
+                    <Route path="/music" component={Music}/>
+                    <Route path="/settings" component={Settings}/>
+                    <Route path="/login" component={Login}/>
+                </div>
+
             </div>
 
         );
@@ -69,6 +70,6 @@ class App extends React.Component<AppMstpType & AppMdtpType> {
 export default compose<ComponentType>
 (withRouter,
     connect<AppMstpType, AppMdtpType, {}, AppStateType>
-    (mstp, {authSetUser})
+    (mstp, {initializedApp})
 )
 (App)
