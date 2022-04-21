@@ -6,6 +6,7 @@ import {Input} from "../common/FormsControls/FormControls";
 import {required} from "../../utilits/validators/validators";
 import {Redirect} from "react-router-dom";
 import style from '../common/FormsControls/FormControl.module.css'
+import {createField} from "./FormsControl";
 
 
 export type LoginData = {
@@ -15,13 +16,13 @@ export type LoginData = {
 }
 
 
-function Login(props: ConnectType) {
+function Login({isLogin, isAuth, ...props}: ConnectType) {
     const onSubmit = (data: LoginData) => {
         const {login, password} = data
         props.login(login, password)
     }
 
-    if (props.isLogin && props.isAuth) {
+    if (isLogin && isAuth) {
         return <Redirect to='/profile'/>
     }
 
@@ -35,21 +36,13 @@ function Login(props: ConnectType) {
 }
 
 
-export function LoginForm(props: InjectedFormProps<LoginData>) {
+export function LoginForm({handleSubmit, error, ...props}: InjectedFormProps<LoginData>) {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field component={Input} name="login" placeholder={"login"} validate={required}/>
-            </div>
-            <div>
-                <Field component={Input} name="password" placeholder={"password"} validate={required}/>
-            </div>
-            {props.error && <div className={style.formCommonError}>
-                {props.error}
-            </div>}
-            <div>
-                <Field component={Input} name="rememberMe" type={"checkbox"}/> remember me
-            </div>
+        <form onSubmit={handleSubmit}>
+            {createField(Input, "login", "login", required, "", "")}
+            {createField(Input, "password", "password", required, "password", "")}
+            {error && <div className={style.formCommonError}> {error} </div>}
+            {createField(Input, "rememberMe", "", () => undefined, "checkbox", "remember me")}
             <button>Login</button>
         </form>
     )

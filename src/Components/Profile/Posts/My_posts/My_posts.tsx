@@ -21,7 +21,7 @@ export class MyPosts extends React.Component<MyPostPropsType> {
     }
 
     render() {
-        debugger
+
         console.log('myposts')
         const postsElements = this.props.posts.map(p => <Posts message={p.message} like={p.like}/>)
         return (

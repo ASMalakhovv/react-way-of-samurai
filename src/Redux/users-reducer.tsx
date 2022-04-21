@@ -2,6 +2,7 @@ import {FollowDate, UsersItemType} from "../types/entities";
 import {AppThunk} from "./redux-store";
 import {usersAPI} from "../api/api";
 import {Dispatch} from "redux";
+import {updateObjectInArray} from "../utilits/object-helpers";
 
 export enum USER_REDUCER_TYPE {
     FOLLOW = "FOLLOW",
@@ -55,9 +56,9 @@ let initialState: UsersInitialStateType = {
 export const usersReducer = (state: UsersInitialStateType = initialState, action: UsersActionType): UsersInitialStateType => {
     switch (action.type) {
         case USER_REDUCER_TYPE.FOLLOW:
-            return {...state, items: state.items.map(u => u.id === action.id ? {...u, followed: true} : u)};
+            return {...state, items: updateObjectInArray(state.items,action.id,'id',{followed:true})};
         case USER_REDUCER_TYPE.UNFOLLOW:
-            return {...state, items: state.items.map(u => u.id === action.id ? {...u, followed: false} : u)};
+            return {...state, items: updateObjectInArray(state.items,action.id,'id',{followed:false})};
         case USER_REDUCER_TYPE.SETUSERS:
             return {...state, items: [...action.users]};
         case USER_REDUCER_TYPE.SETCURRENTPAGE:
@@ -163,5 +164,5 @@ export const follow = (userID: number): AppThunk<void> => async dispatch => {
 }
 
 export const unFollow = (userID: number): AppThunk<void> => async dispatch => {
-    followUnfollowFlow(userID, dispatch, followSuccess, usersAPI.followUser)
+    followUnfollowFlow(userID, dispatch, unFollowSuccess, usersAPI.unFollowUser)
 }

@@ -14,7 +14,7 @@ console.dir(ProfileInfo)
 console.dir(MyPostsContainer)
 
 function Profile(props: ProfilePropsType) {
-debugger
+
     return (
         <div>
             <ProfileInfo profileUser={props.profileUsers}

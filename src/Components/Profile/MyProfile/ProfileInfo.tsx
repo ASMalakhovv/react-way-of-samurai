@@ -11,7 +11,7 @@ type ProfileInfoProps = {
 }
 
 export function ProfileInfo(props: ProfileInfoProps) {
-    debugger
+
     if (!props.profileUser) {
         return <Preloader/>
     }
