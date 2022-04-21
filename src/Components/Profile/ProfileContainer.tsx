@@ -30,6 +30,7 @@ type ProfilePropsType = MapStateToPropsType & MapDispatchToPropsType
 
 class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
+        debugger
         let userId = this.props.match.params.userId
         if (!userId) {
             userId = String(this.props.authorizedId)
@@ -39,6 +40,7 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 
     render() {
+        debugger
         return (
             <div>
                 <Profile
@@ -46,7 +48,6 @@ class ProfileContainer extends React.Component<PropsType> {
                     status={this.props.status}
                     updateStatus={this.props.setStatus}
                 />
-
             </div>
 
         )

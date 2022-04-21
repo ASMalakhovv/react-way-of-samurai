@@ -22,7 +22,6 @@ let initialState: AppInitialStateType = {
 export const appReducer = (state: AppInitialStateType = initialState, action: AppActionType): AppInitialStateType => {
     switch (action.type) {
         case APP.INITIALIZEDSUCCESS:
-            debugger
             return {
                 ...state,
                 initialized: true

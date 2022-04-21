@@ -9,31 +9,35 @@ import {Textarea} from "../../../common/FormsControls/FormControls";
 
 const maxLength10 = maxLengthCreator(10)
 
-export function MyPosts(props: MyPostPropsType) {
+export class MyPosts extends React.Component<MyPostPropsType> {
 
-    const onSubmit = (data: AddPostData) => {
+    onSubmit = (data: AddPostData) => {
         console.log(data.addPost)
         if (data.addPost && data.addPost.trim()) {
-            props.addNewPost(data.addPost);
+            this.props.addNewPost(data.addPost);
         } else {
             alert('Введите корректные данные')
         }
     }
 
-    const postsElements = props.posts.map(p => <Posts message={p.message} like={p.like}/>)
-    return (
-        <div className={s.myPosts}>
-            <div>
+    render() {
+        debugger
+        console.log('myposts')
+        const postsElements = this.props.posts.map(p => <Posts message={p.message} like={p.like}/>)
+        return (
+            <div className={s.myPosts}>
                 <div>
-                    <h3>My posts</h3>
+                    <div>
+                        <h3>My posts</h3>
+                    </div>
+                    <AddPostReduxForm onSubmit={this.onSubmit}/>
                 </div>
-                <AddPostReduxForm onSubmit={onSubmit}/>
+                <div className={s.posts}>
+                    {postsElements}
+                </div>
             </div>
-            <div className={s.posts}>
-                {postsElements}
-            </div>
-        </div>
-    )
+        )
+    }
 }
 
 

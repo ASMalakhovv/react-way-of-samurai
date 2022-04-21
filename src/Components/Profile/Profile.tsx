@@ -1,7 +1,8 @@
 import React from "react";
 import {ProfileInfo} from "./MyProfile/ProfileInfo";
-import MyPostsContainer from "./Posts/My_posts/My_postsContainer";
 import {ProfileUser} from "../../types/entities";
+import MyPostsContainer from "./Posts/My_posts/My_postsContainer";
+
 
 export type ProfilePropsType = {
     profileUsers: ProfileUser
@@ -9,15 +10,18 @@ export type ProfilePropsType = {
     updateStatus: (status:string) => void
 }
 
-function Profile(props: ProfilePropsType) {
+console.dir(ProfileInfo)
+console.dir(MyPostsContainer)
 
+function Profile(props: ProfilePropsType) {
+debugger
     return (
         <div>
             <ProfileInfo profileUser={props.profileUsers}
                          updateStatus={props.updateStatus}
                          status={props.status}
             />
-            <MyPostsContainer/>
+            <MyPostsContainer />
 
         </div>
     )

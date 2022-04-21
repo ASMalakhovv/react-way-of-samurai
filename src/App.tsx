@@ -68,7 +68,7 @@ class App extends React.Component<AppMstpType & AppMdtpType> {
 
 
 export default compose<ComponentType>
-(withRouter,
+(
     connect<AppMstpType, AppMdtpType, {}, AppStateType>
     (mstp, {initializedApp})
 )

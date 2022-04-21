@@ -1,7 +1,8 @@
 import {AuthMe, AuthMeData, CommonLoginType} from "../types/entities";
-import {AppThunk} from "./redux-store";
+import {AppAction, AppThunk} from "./redux-store";
 import {authAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {Dispatch} from "redux";
 
 
 export enum AUTH_ME {
@@ -70,17 +71,15 @@ export const loginApp = (isLogin: boolean) => {
 
 
 //THUNK
-export const authSetUser = (): AppThunk<Promise<any>> => dispatch => {
-    return authAPI.getAuthMe()
-        .then(res => {
-            let {id, email, login} = res.data
-            if (res.resultCode === 0) {
-                if (id && email && login) {
-                    dispatch(setUser(id, email, login, true))
-                    dispatch(loginApp(true))
-                }
-            }
-        })
+export const authSetUser = (): AppThunk<Promise<any>> => async (dispatch: Dispatch<AppAction>) => {
+    let result = await authAPI.getAuthMe()
+    let {id, email, login} = result.data
+    if (result.resultCode === 0) {
+        if (id && email && login) {
+            dispatch(setUser(id, email, login, true))
+            dispatch(loginApp(true))
+        }
+    }
 }
 
 export const login = (email: string, password: string): AppThunk<void> => async dispatch => {
