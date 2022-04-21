@@ -10,21 +10,21 @@ type ProfileInfoProps = {
     updateStatus: (status: string) => void
 }
 
-export function ProfileInfo(props: ProfileInfoProps) {
+export function ProfileInfo({profileUser,status,updateStatus}: ProfileInfoProps) {
 
-    if (!props.profileUser) {
+    if (!profileUser) {
         return <Preloader/>
     }
     return (
         <div className={s.img}>
             <div className={s.description}>
-                <img src={props.profileUser.photos.large}/>
+                <img src={profileUser.photos.large}/>
                 ava+description
             </div>
             <div>
                 <ProfileStatus profileStatus={"This text"}
-                               updateStatus={props.updateStatus}
-                               status={props.status}/>
+                               updateStatus={updateStatus}
+                               status={status}/>
             </div>
         </div>
     )

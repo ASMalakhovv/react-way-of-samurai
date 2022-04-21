@@ -36,12 +36,14 @@ export type MapStateToProps = {
 
 class UsersContainerComponent extends React.Component<UsersPropsType> {
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        const {getUsers,currentPage,pageSize} = this.props
+        getUsers(currentPage, pageSize)
     }
 
     changePageHandler = (current: number) => {
-        this.props.setCurrentPage(current)
-        this.props.getUsers(current, this.props.pageSize)
+        const {setCurrentPage,getUsers,pageSize} = this.props
+        setCurrentPage(current)
+        getUsers(current, pageSize)
     }
 
     render() {

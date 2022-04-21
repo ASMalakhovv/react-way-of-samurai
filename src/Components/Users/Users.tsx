@@ -3,6 +3,8 @@ import userPhoto from '../../assets/images/images.png';
 import style from "./Users.module.css";
 import {UsersItemType} from "../../types/entities";
 import {NavLink} from 'react-router-dom';
+import Paginator from "../common/Paginator/Paginator";
+import User from "./User";
 
 export type UsersPropsType = {
     totalCount: number
@@ -16,57 +18,29 @@ export type UsersPropsType = {
     arrUserForButton: number[]
 }
 
-export function Users(props: UsersPropsType) {
-    let numberPages: number = Math.ceil((props.totalCount - 16300) / props.pageSize)
-    let arrayPages: number[] = [];
-    for (let i = 1; i <= numberPages; i++) {
-        arrayPages.push(i)
-    }
+export function Users
+(
+    {
+        users,
+        arrUserForButton,
+        onClickUnFollowHandler,
+        onClickFollowHandler,
+        totalCount,
+        pageSize,
+        currentPage,
+        changePageHandler,
+        ...props
+    }: UsersPropsType
+) {
+
     return (
         <div>
-            <div>
-                {arrayPages.map(n => {
-                        return (
-                            <span className={props.currentPage === n ? style.number : ""}
-                                  onClick={() => props.changePageHandler(n)}>{n}</span>
-                        )
-                    }
-                )}
-            </div>
-            {props.users.map(u =>
-                <div key={u.id}>
-                    <span>
-                        <div>
-                            <NavLink to={'/profile/' + u.id}>
-                            <img src={u.photos.small || userPhoto}
-                                 width={'50px'}/>
-                                </NavLink>
-                        </div>
-                        <div>
-                            {u.followed ?
-                                <button disabled={props.arrUserForButton.some(id => id === u.id)}
-                                        onClick={() => {
-                                            props.onClickUnFollowHandler(u.id)
-                                        }}>UnFollow</button>
-                                :
-                                <button disabled={props.arrUserForButton.some(id => id === u.id)} onClick={() => {
-                                    props.onClickFollowHandler(u.id)
-                                }}>Follow</button>}
-
-                        </div>
-                    </span>
-                    <span>
-                        <span>
-                            <div>{u.name}</div>
-                            <div>{u.status}</div>
-                        </span>
-                        <span>
-                            <div>{"u.location.country"}</div>
-                            <div>{"u.location.city"}</div>
-                        </span>
-
-                    </span>
-                </div>)}
+            <Paginator totalCount={totalCount} pageSize={pageSize}
+                       currentPage={currentPage} changePageHandler={changePageHandler}
+            />
+            {users.map(u => <User changePageHandler={changePageHandler} onClickFollowHandler={onClickFollowHandler}
+                                  onClickUnFollowHandler={onClickUnFollowHandler} arrUserForButton={arrUserForButton}
+                                  user={u} key={u.id}/>)}
         </div>
     )
 }
