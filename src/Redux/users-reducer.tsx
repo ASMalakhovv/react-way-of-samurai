@@ -43,7 +43,7 @@ export type UsersInitialStateType = {
 }
 let initialState: UsersInitialStateType = {
     items: [],
-    pageSize: 5,
+    pageSize: 10,
     currentPage: 1,
     totalCount: 0,
     error: 'null',
