@@ -1,10 +1,8 @@
 import React from 'react';
-import userPhoto from '../../assets/images/images.png';
-import style from "./Users.module.css";
 import {UsersItemType} from "../../types/entities";
-import {NavLink} from 'react-router-dom';
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
+import {UsersSearchForm} from "./UsersSearchForm";
 
 export type UsersPropsType = {
     totalCount: number
@@ -35,6 +33,7 @@ export function Users
 
     return (
         <div>
+            <UsersSearchForm/>
             <Paginator totalCount={totalCount} pageSize={pageSize}
                        currentPage={currentPage} changePageHandler={changePageHandler}
             />
@@ -44,3 +43,5 @@ export function Users
         </div>
     )
 }
+
+

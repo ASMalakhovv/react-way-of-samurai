@@ -37,13 +37,13 @@ export type MapStateToProps = {
 class UsersContainerComponent extends React.Component<UsersPropsType> {
     componentDidMount() {
         const {getUsers,currentPage,pageSize} = this.props
-        getUsers(currentPage, pageSize)
+        getUsers(currentPage, pageSize, "")
     }
 
     changePageHandler = (current: number) => {
         const {setCurrentPage,getUsers,pageSize} = this.props
         setCurrentPage(current)
-        getUsers(current, pageSize)
+        getUsers(current, pageSize, "")
     }
 
     render() {
@@ -88,7 +88,7 @@ export type MapDispatchToPropsType = {
     unFollow: (id: number) => void
     setUsers: (users: Array<UsersItemType>) => void
     setCurrentPage: (current: number) => void
-    getUsers: (currentPage: number, pageSize: number) => void
+    getUsers: (currentPage: number, pageSize: number, term: string) => void
 }
 
 

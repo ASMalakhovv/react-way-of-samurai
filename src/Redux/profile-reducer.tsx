@@ -149,3 +149,10 @@ export const setStatus = (status: string): AppThunk<void> => async dispatch => {
         alert('Не могу установить статус')
     }
 }
+export const savePhoto = (file: any): AppThunk<void> => async dispatch => {
+    try {
+
+    } catch (e) {
+
+    }
+}

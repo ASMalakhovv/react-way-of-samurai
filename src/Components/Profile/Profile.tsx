@@ -8,10 +8,10 @@ export type ProfilePropsType = {
     profileUsers: ProfileUser
     status:string
     updateStatus: (status:string) => void
+    isOwner:boolean
+    savePhoto: (file:any) => void
 }
 
-console.dir(ProfileInfo)
-console.dir(MyPostsContainer)
 
 function Profile(props: ProfilePropsType) {
 
@@ -20,6 +20,8 @@ function Profile(props: ProfilePropsType) {
             <ProfileInfo profileUser={props.profileUsers}
                          updateStatus={props.updateStatus}
                          status={props.status}
+                         isOwner={props.isOwner}
+                         savePhoto={props.savePhoto}
             />
             <MyPostsContainer />
 

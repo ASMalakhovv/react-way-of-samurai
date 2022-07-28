@@ -12,6 +12,7 @@ export enum USER_REDUCER_TYPE {
     SETTOTALCOUNT = "SET-TOTAL-COUNT",
     TOGGLEISFETCHING = "TOGGLE-IS-FETCHING",
     TOGGLEFOLLOWINGPROGRESS = "TOGGLE-FOLLOWING-PROGRESS",
+    SET_FILTER = "users/SET-FILTER"
 }
 
 export type FollowSuccess = ReturnType<typeof followSuccess>
@@ -30,7 +31,11 @@ export type UsersActionType =
     | ReturnType<typeof setTotalCount>
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof toggleFollowingProgress>
+    | ReturnType<typeof setFilter>
 
+export type FilterUsers = {
+    term: string
+}
 export type UsersInitialStateType = {
     items: Array<UsersItemType>
     currentPage: number
@@ -40,6 +45,7 @@ export type UsersInitialStateType = {
     isFetching: boolean
     receivedForButton: false
     arrUserForButton: number[]
+    filter: FilterUsers
 }
 let initialState: UsersInitialStateType = {
     items: [],
@@ -49,16 +55,20 @@ let initialState: UsersInitialStateType = {
     error: 'null',
     isFetching: false,
     receivedForButton: false,
-    arrUserForButton: []
-
+    arrUserForButton: [],
+    filter: {
+        term: ""
+    },
 }
 
 export const usersReducer = (state: UsersInitialStateType = initialState, action: UsersActionType): UsersInitialStateType => {
     switch (action.type) {
+        case USER_REDUCER_TYPE.SET_FILTER:
+            return {...state, filter: action.payload}
         case USER_REDUCER_TYPE.FOLLOW:
-            return {...state, items: updateObjectInArray(state.items,action.id,'id',{followed:true})};
+            return {...state, items: updateObjectInArray(state.items, action.id, 'id', {followed: true})};
         case USER_REDUCER_TYPE.UNFOLLOW:
-            return {...state, items: updateObjectInArray(state.items,action.id,'id',{followed:false})};
+            return {...state, items: updateObjectInArray(state.items, action.id, 'id', {followed: false})};
         case USER_REDUCER_TYPE.SETUSERS:
             return {...state, items: [...action.users]};
         case USER_REDUCER_TYPE.SETCURRENTPAGE:
@@ -79,7 +89,7 @@ export const usersReducer = (state: UsersInitialStateType = initialState, action
     }
 }
 
-//--------------------------------------------------------------------------------------------------------ACTION CREATOR
+//ACTION CREATOR
 
 export const followSuccess = (id: number) => {
     return {
@@ -130,13 +140,19 @@ export const toggleFollowingProgress = (receivedForButton: boolean, userID: numb
         userID
     } as const
 }
+export const setFilter = (payload: FilterUsers) => {
+    return {
+        type: USER_REDUCER_TYPE.SET_FILTER,
+        payload
+    } as const
+}
 
-//---------------------------------------------------------------------------------------------------------THUNK-CREATOR
+//THUNK-CREATOR
 
-export const getUsers = (currentPage: number, pageSize: number): AppThunk<void> => async dispatch => {
+export const getUsers = (currentPage: number, pageSize: number, term: string): AppThunk<void> => async dispatch => {
     try {
         dispatch(toggleIsFetching(true))
-        let res = await usersAPI.getUsers(currentPage, pageSize)
+        let res = await usersAPI.getUsers(currentPage, pageSize, "")
         dispatch(toggleIsFetching(false))
         dispatch(setUsers(res.items))
         dispatch(setTotalCount(res.totalCount))
